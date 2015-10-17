@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">HomeBank</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="sync">Sync</string>
+    <string name="editBillName">Bill Name</string>
+    <string name="editBillAbout">About</string>
+    <string name="butOk">Ok</string>
+    <string name="butCancel">Cancel</string>
+    <string name="billInfo">Info bill</string>
+    <string name="billdelete">Delete bill</string>
+    <string name="editOperationValue">Value operation</string>
+    <string name="setOperation">Add operation</string>
+    <string name="editOperationAbout">About operation</string>
+
+</resources>

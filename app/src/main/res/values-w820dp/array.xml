@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="item_menu">
+        <item>MainMenu</item>
+        <item>One</item>
+        <item>Two</item>
+        <item>Three</item>
+    </array>
+    <array name="image_array">
+        <item>http://www.gcooler.com/uploadfile/favorites/demo/sexy-lightbox-2.3/images/small_homerin2.jpg</item>
+        <item>http://cdn.playbuzz.com/cdn/0079c830-3406-4c05-a5c1-bc43e8f01479/7dd84d70-768b-492b-88f7-a6c70f2db2e9.jpg</item>
+        <item>http://www.pets4homes.co.uk/images/articles/2390/large/more-information-on-the-attractive-and-unusual-serengeti-cat-548ff497a8260.jpg</item>
+        <item>http://cdn.sheknows.com/articles/2012/10/isolated-cat.jpg</item>
+        <item>http://media1.santabanta.com/full1/Animals/Cats/cats-93a.jpg</item>
+        <item>http://exmoorpet.com/wp-content/uploads/2012/08/cat.png</item>
+        <item>http://i3.mirror.co.uk/incoming/article99763.ece/ALTERNATES/s615/a-bengal-cat-935179217.jpg</item>
+        <item>http://www.animauxenligne.com/media/wysiwyg/cat.jpg</item>
+        <item>https://www.petfinder.com/wp-content/uploads/2012/11/99233806-bringing-home-new-cat-632x475.jpg</item>
+        <item>http://www.cgdev.org/sites/default/files/cat8.jpg</item>
+        <item>http://media4.popsugar-assets.com/files/2014/08/08/878/n/1922507/caef16ec354ca23b_thumb_temp_cover_file32304521407524949.xxxlarge/i/Funny-Cat-GIFs.jpg</item>
+        <item>http://media4.popsugar-assets.com/files/2014/08/08/878/n/1922507/caef16ec354ca23b_thumb_temp_cover_file32304521407524949.xxxlarge/i/Funny-Cat-GIFs.jpg</item>
+        <item>http://media4.popsugar-assets.com/files/2014/08/08/878/n/1922507/caef16ec354ca23b_thumb_temp_cover_file32304521407524949.xxxlarge/i/Funny-Cat-GIFs.jpg</item>
+        <item>https://upload.wikimedia.org/wikipedia/commons/7/75/Cat_eating_a_rabbit.jpeg</item>
+        <item>http://i.huffpost.com/gen/1860407/images/o-BLACK-FOOTED-CAT-KITTENS-facebook.jpg</item>
+        <item>http://i1.mirror.co.uk/incoming/article3868077.ece/ALTERNATES/s615/PAY-Hero-Cat.jpg</item>
+        <item>http://www.businessinsider.com/image/4f3433986bb3f7b67a00003c/cute-cat.jpg</item>
+        <item>http://38.media.tumblr.com/1b880127f4dbf2a51dadf7d6706916f5/tumblr_n98dov7QmR1rz3ewlo1_250.jpg</item>
+        <item>http://nextranks.com/data_images/main/cats/cats-03.jpg</item>
+    </array>
+    <array name="tabs">
+        <item>Bills</item>
+        <item>Add</item>
+        <item>Sub</item>
+        <item>More info</item>
+    </array>
+    <string-array name="operation">
+        <item>Add</item>
+        <item>Sub</item>
+    </string-array>
+</resources>
