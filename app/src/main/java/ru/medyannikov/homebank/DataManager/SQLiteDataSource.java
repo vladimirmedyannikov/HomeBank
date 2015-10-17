@@ -82,6 +82,19 @@ public class SQLiteDataSource {
         return result;
     }
 
-    public void insertOperation(Operation newOperation) {
+    public Long insertOperation(Operation newOperation) {
+        ContentValues cv = new ContentValues();
+        cv.put(SQLiteHelperBill.OPERATION_ABOUT, newOperation.getAbout());
+        cv.put(SQLiteHelperBill.OPERATION_BILL, newOperation.getIdBill());
+        cv.put(SQLiteHelperBill.OPERATION_DATE, newOperation.getDate());
+        cv.put(SQLiteHelperBill.OPERATION_ID, newOperation.getId());
+        cv.put(SQLiteHelperBill.OPERATION_ID_SERVER,newOperation.getIdServ());
+        cv.put(SQLiteHelperBill.OPERATION_SYNC,newOperation.getSync());
+        cv.put(SQLiteHelperBill.OPERATION_TYPE, newOperation.getType());
+        cv.put(SQLiteHelperBill.OPERATION_VALUE, newOperation.getValue());
+
+        Long idInsert = db.insert(SQLiteHelperBill.TABLE_OPERATION, null, cv);
+
+        return idInsert;
     }
 }
