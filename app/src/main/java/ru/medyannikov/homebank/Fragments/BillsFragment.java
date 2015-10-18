@@ -69,7 +69,7 @@ public class BillsFragment extends Fragment {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        billList = new ArrayList<Bill>();
+        //billList = new ArrayList<Bill>();
 
         updateItems();
 
@@ -120,9 +120,10 @@ public class BillsFragment extends Fragment {
                 break;
             case 2:
                 //Toast.makeText(this.getContext(), "Delete " + item.getGroupId(), Toast.LENGTH_SHORT).show();
-                Snackbar.make(this.getView(), "Delete " + item.getGroupId() + " " + billList.get(item.getGroupId()).getName(), Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(this.getView(), "Add operation " + item.getGroupId() + " " + billList.get(item.getGroupId()).getName(), Snackbar.LENGTH_SHORT).show();
                 Intent intent = new Intent(getContext(), OperationIntent.class);
-                startActivityForResult(intent,1);
+                intent.setAction(String.valueOf(billList.get(item.getGroupId()).get_id()));
+                startActivityForResult(intent, item.getGroupId());
                 break;
             case 3:
                 //Toast.makeText(this.getContext(), "Delete " + item.getGroupId(), Toast.LENGTH_SHORT).show();

@@ -12,6 +12,15 @@ public class Operation {
     private int sync;
     private int idBill;
     private String about;
+    private String nameBill;
+
+    public String getNameBill() {
+        return nameBill;
+    }
+
+    public void setNameBill(String nameBill) {
+        this.nameBill = nameBill;
+    }
 
     public String getAbout() {
         return about;

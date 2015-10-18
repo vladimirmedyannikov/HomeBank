@@ -7,6 +7,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import ru.medyannikov.homebank.DataManager.SQLiteDataSource;
 import ru.medyannikov.homebank.Model.Operation;
@@ -32,6 +33,8 @@ public class OperationIntent extends AppCompatActivity {
         buttonOk = (Button) findViewById(R.id.butOk);
         buttonCancel = (Button) findViewById(R.id.butCancel);
 
+        Toast.makeText(this,getIntent().getAction(),Toast.LENGTH_SHORT).show();
+
         buttonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,8 +51,15 @@ public class OperationIntent extends AppCompatActivity {
                 String about = editAbout.getText().toString();
                 Double value = Double.valueOf(editValue.getText().toString());
                 Operation newOperation = new Operation();
+                newOperation.setAbout(about);
+                newOperation.setValue(value);
+                newOperation.setIdBill(Integer.valueOf(getIntent().getAction()));
+
+
+
                 dataSource.insertOperation(newOperation);
                 dataSource.closeConnetion();
+                finish();
             }
         });
 

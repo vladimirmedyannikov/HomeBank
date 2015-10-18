@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import ru.medyannikov.homebank.DataManager.SQLiteDataSource;
 import ru.medyannikov.homebank.Model.Operation;
 import ru.medyannikov.homebank.R;
 
@@ -33,7 +34,7 @@ public class RecycleAdapterOperation extends RecyclerView.Adapter<RecycleAdapter
 
     @Override
     public void onBindViewHolder(final RecycleAdapterOperation.ViewHolder holder, int position) {
-       holder.operationBillName.setText(operationList.get(position).getIdBill().toString());
+       holder.operationBillName.setText(operationList.get(position).getNameBill());
        holder.operationAbout.setText(operationList.get(position).getAbout());
        holder.operationValue.setText(operationList.get(position).getValue().toString());
        holder.operationSync.setText(operationList.get(position).getSync().toString());

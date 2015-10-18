@@ -19,7 +19,7 @@ public class SQLiteDataSource {
 
     private SQLiteDatabase db;
     private SQLiteHelperBill sqLiteHelper;
-    private String[] allColums = {SQLiteHelperBill.BILL_ID,
+    private String[] allColumsBill = {SQLiteHelperBill.BILL_ID,
             SQLiteHelperBill.BILL_ID_SERVER,
             SQLiteHelperBill.BILL_NAME,
             SQLiteHelperBill.BILL_ABOUT,
@@ -28,7 +28,19 @@ public class SQLiteDataSource {
             SQLiteHelperBill.BILL_DEPENDENCE,
             SQLiteHelperBill.BILL_SYNC};
 
+    private String[] allColumnsOperation = {
+            SQLiteHelperBill.OPERATION_ID,
+            SQLiteHelperBill.OPERATION_ID_SERVER,
+            SQLiteHelperBill.OPERATION_ABOUT,
+            SQLiteHelperBill.OPERATION_BILL,
+            SQLiteHelperBill.OPERATION_DATE,
+            SQLiteHelperBill.OPERATION_SYNC,
+            SQLiteHelperBill.OPERATION_TYPE,
+            SQLiteHelperBill.OPERATION_VALUE
+    };
+
     public final static List<Bill> billList = new ArrayList<Bill>();
+    public final static List<Operation> operationList = new ArrayList<Operation>();
 
     public SQLiteDataSource(Context context)
     {
@@ -64,7 +76,7 @@ public class SQLiteDataSource {
     public List<Bill> getBills()
     {
         billList.clear();
-        Cursor cursor = db.query(SQLiteHelperBill.TABLE_BILL, allColums,null,null,null,null, SQLiteHelperBill.BILL_ID + " DESC");
+        Cursor cursor = db.query(SQLiteHelperBill.TABLE_BILL, allColumsBill,null,null,null,null, SQLiteHelperBill.BILL_ID + " DESC");
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast())
@@ -76,10 +88,53 @@ public class SQLiteDataSource {
         return billList;
     }
 
+    public List<Operation> getOperations(){
+        operationList.clear();
+
+        Cursor cursor = db.rawQuery("Select "
+                + SQLiteHelperBill.TABLE_OPERATION + "." + SQLiteHelperBill.OPERATION_ID + ","
+                + SQLiteHelperBill.OPERATION_ID_SERVER + ","
+                + SQLiteHelperBill.OPERATION_ABOUT + ","
+                + SQLiteHelperBill.OPERATION_BILL + ","
+                + SQLiteHelperBill.OPERATION_DATE + ","
+                + SQLiteHelperBill.OPERATION_SYNC + ","
+                + SQLiteHelperBill.OPERATION_TYPE + ","
+                + SQLiteHelperBill.OPERATION_VALUE  + ","
+                + SQLiteHelperBill.BILL_NAME
+                + " from " + SQLiteHelperBill.TABLE_OPERATION + " left join " + SQLiteHelperBill.TABLE_BILL
+                + " on " + SQLiteHelperBill.TABLE_BILL +"."+ SQLiteHelperBill.BILL_ID + " = " + SQLiteHelperBill.OPERATION_BILL, null);
+
+        //Cursor cursor = db.query(SQLiteHelperBill.TABLE_OPERATION, allColumnsOperation, null, null, null, null, SQLiteHelperBill.OPERATION_DATE + " DESC");
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            operationList.add(cursorToOperation(cursor));
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return operationList;
+    }
+
     private Bill cursorToBill(Cursor cursor) {
         Bill result = new Bill(cursor.getLong(0),cursor.getString(2), cursor.getDouble(5), cursor.getInt(6),
                 cursor.getLong(4), cursor.getString(3), cursor.getInt(7), cursor.getInt(1));
         return result;
+    }
+
+    private Operation cursorToOperation(Cursor cursor){
+        Operation resulOperation = new Operation();
+
+        resulOperation.setId(cursor.getInt(0));
+        resulOperation.setAbout(cursor.getString(2));
+        resulOperation.setDate(cursor.getInt(4));
+        resulOperation.setIdBill(cursor.getInt(3));
+        resulOperation.setIdServ(cursor.getInt(1));
+        resulOperation.setSync(cursor.getInt(5));
+        resulOperation.setType(cursor.getInt(6));
+        resulOperation.setValue(cursor.getDouble(7));
+        resulOperation.setNameBill(cursor.getString(8));
+
+        return resulOperation;
     }
 
     public Long insertOperation(Operation newOperation) {
@@ -87,14 +142,13 @@ public class SQLiteDataSource {
         cv.put(SQLiteHelperBill.OPERATION_ABOUT, newOperation.getAbout());
         cv.put(SQLiteHelperBill.OPERATION_BILL, newOperation.getIdBill());
         cv.put(SQLiteHelperBill.OPERATION_DATE, newOperation.getDate());
-        cv.put(SQLiteHelperBill.OPERATION_ID, newOperation.getId());
+        //cv.put(SQLiteHelperBill.OPERATION_ID, newOperation.getId());
         cv.put(SQLiteHelperBill.OPERATION_ID_SERVER,newOperation.getIdServ());
         cv.put(SQLiteHelperBill.OPERATION_SYNC,newOperation.getSync());
         cv.put(SQLiteHelperBill.OPERATION_TYPE, newOperation.getType());
         cv.put(SQLiteHelperBill.OPERATION_VALUE, newOperation.getValue());
 
         Long idInsert = db.insert(SQLiteHelperBill.TABLE_OPERATION, null, cv);
-
         return idInsert;
     }
 }
