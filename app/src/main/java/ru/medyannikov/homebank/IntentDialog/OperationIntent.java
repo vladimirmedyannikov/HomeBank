@@ -9,7 +9,15 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
+
+import java.util.List;
+
+import de.greenrobot.event.EventBus;
 import ru.medyannikov.homebank.DataManager.SQLiteDataSource;
+import ru.medyannikov.homebank.Eventbus.BusProvider;
+import ru.medyannikov.homebank.Eventbus.OperationChangeEvent;
 import ru.medyannikov.homebank.Model.Operation;
 import ru.medyannikov.homebank.R;
 
@@ -23,9 +31,12 @@ public class OperationIntent extends AppCompatActivity {
     private Button buttonOk;
     private Button buttonCancel;
     private SQLiteDataSource dataSource;
+    private EventBus eventBus;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        BusProvider.getInstance().register(this);
+
         setContentView(R.layout.activity_operation_intent);
         spinner = (Spinner) findViewById(R.id.editSpinerOperation);
         editValue = (EditText) findViewById(R.id.editOperationValue);
@@ -54,11 +65,14 @@ public class OperationIntent extends AppCompatActivity {
                 newOperation.setAbout(about);
                 newOperation.setValue(value);
                 newOperation.setIdBill(Integer.valueOf(getIntent().getAction()));
+                newOperation.setType(spinner.getSelectedItemPosition());
 
 
 
                 dataSource.insertOperation(newOperation);
                 dataSource.closeConnetion();
+
+                BusProvider.getInstance().post(new OperationChangeEvent());
                 finish();
             }
         });
@@ -70,6 +84,9 @@ public class OperationIntent extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
+    }
+    @Subscribe
+    public void onEvent(OperationChangeEvent event){
 
     }
 }

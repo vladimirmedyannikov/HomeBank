@@ -2,8 +2,8 @@
 <resources>
     <color name="color_header">#f3f2a3</color>
     <color name="color_main">#FF009688</color>
-    <color name="color_no_sync">#f0f0f0</color>
-    <color name="color_sync">#5d5953</color>
+    <color name="color_no_sync">#ff9696</color>
+    <color name="color_sync">#7cff30</color>
     <color name="color_tabs">#a6f4fff3</color>
     <color name="primary">#f23037</color>
     <color name="primary_pressed">#ffabae</color>
@@ -12,4 +12,5 @@
     <color name="primary_dark_material_light">#007066</color>
     <color name="accent_material_light">#009889</color>
     <color name="black">#000000</color>
+    <color name="operationSub">#f23037</color>
 </resources>

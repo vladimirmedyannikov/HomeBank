@@ -1,6 +1,8 @@
 package ru.medyannikov.homebank.Adapter;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +39,16 @@ public class RecycleAdapterOperation extends RecyclerView.Adapter<RecycleAdapter
        holder.operationBillName.setText(operationList.get(position).getNameBill());
        holder.operationAbout.setText(operationList.get(position).getAbout());
        holder.operationValue.setText(operationList.get(position).getValue().toString());
+        if(operationList.get(position).getType() == 1){
+            holder.operationValue.setTextColor(holder.context.getResources().getColor(R.color.operationSub));
+        } else{
+            holder.operationValue.setTextColor(holder.context.getResources().getColor(R.color.black));
+        }
+        if (operationList.get(position).getSync() == 0){
+            holder.operationSync.setTextColor(holder.context.getResources().getColor(R.color.color_no_sync));
+        } else{
+            holder.operationSync.setTextColor(holder.context.getResources().getColor(R.color.color_sync));
+        }
        holder.operationSync.setText(operationList.get(position).getSync().toString());
     }
 

@@ -30,6 +30,7 @@ public class SQLiteHelperBill extends SQLiteOpenHelper {
     public static final String OPERATION_SYNC = "operat_sync";
     public static final String OPERATION_ID_SERVER = "operat_id_serv";
     public static final String OPERATION_ABOUT = "operat_about";
+    public static final String OPERATION_TRIGGER_INSERT = "trig_insert_operat";
 
     public static final String TABLE_USERS = "users";
     public static final String USER_ID = "_id";
@@ -41,7 +42,7 @@ public class SQLiteHelperBill extends SQLiteOpenHelper {
     public static final String USER_ID_SERVER = "user_id_serv";
 
     public static final String DATABASE_NAME = "bill.db";
-    public static final int DATABASE_VERSION = 5;
+    public static final int DATABASE_VERSION = 6;
 
     public static final String CREATE_BILL =
             "create table "+ TABLE_BILL
@@ -75,6 +76,14 @@ public class SQLiteHelperBill extends SQLiteOpenHelper {
             +USER_SYNC + " integer default 0, "
             +USER_ID_SERVER + " integer default 0);";
 
+    public static final String CREATE_TRIGGER_INSERT_OPERATION =
+            "create trigger "+ OPERATION_TRIGGER_INSERT
+            + " after insert on " + TABLE_OPERATION
+            + " BEGIN "
+            + " UPDATE " + TABLE_BILL + " SET " + BILL_VALUE + " = (select sum(case "+ OPERATION_TYPE +" when " + OPERATION_TYPE + " = 1 then " + OPERATION_VALUE
+                    + " else (-1)*" + OPERATION_VALUE + " end) from "+ TABLE_OPERATION +" where " + OPERATION_BILL + " = " + TABLE_BILL +"."+ BILL_ID + ");"
+            + " END;";
+
 
     public SQLiteHelperBill(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -87,18 +96,19 @@ public class SQLiteHelperBill extends SQLiteOpenHelper {
         db.execSQL(CREATE_USERS);
     }
     public void onCreate(SQLiteDatabase db, int ver) {
-        db.execSQL(CREATE_BILL);
-        db.execSQL(CREATE_OPERATION);
+        //db.execSQL(CREATE_BILL);
+        //db.execSQL(CREATE_OPERATION);
         /*if (ver < DATABASE_VERSION)
             db.execSQL(CREATE_USERS);*/
+        db.execSQL(CREATE_TRIGGER_INSERT_OPERATION);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (oldVersion < newVersion)
         {
-            db.execSQL("DROP TABLE IF EXISTS " + TABLE_BILL);
-            db.execSQL("DROP TABLE IF EXISTS " + TABLE_OPERATION);
+            //db.execSQL("DROP TABLE IF EXISTS " + TABLE_BILL);
+            //db.execSQL("DROP TABLE IF EXISTS " + TABLE_OPERATION);
             //db.execSQL("DROP TABLE IF EXISTS " + TABLE_BILL);
             onCreate(db,oldVersion);
         }

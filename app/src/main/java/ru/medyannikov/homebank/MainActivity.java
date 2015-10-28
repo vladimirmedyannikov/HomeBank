@@ -15,7 +15,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.squareup.otto.Subscribe;
+
+import de.greenrobot.event.EventBus;
 import ru.medyannikov.homebank.Adapter.TabPagerFragmentAdapter;
+import ru.medyannikov.homebank.Eventbus.BusProvider;
+import ru.medyannikov.homebank.Eventbus.OperationChangeEvent;
 
 public class MainActivity extends AppCompatActivity {
     private CoordinatorLayout frameMain;
@@ -38,8 +43,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
-        eventBus = new EventBus();
-        eventBus.register(this);
+        BusProvider.getInstance().register(this);
         frameMain = (CoordinatorLayout) findViewById(R.id.frameMain);
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         viewPager = (ViewPager) findViewById(R.id.viewPager);
@@ -73,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
                 invalidateOptionsMenu();
             }
         };
+
         drawerToggle.setDrawerIndicatorEnabled(true);
         drawerLayout.setDrawerListener(drawerToggle);
 
@@ -104,5 +109,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    @Subscribe
+    public void onEvent(OperationChangeEvent event){
+
     }
 }
