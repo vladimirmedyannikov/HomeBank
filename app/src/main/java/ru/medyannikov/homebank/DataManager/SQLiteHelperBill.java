@@ -42,7 +42,7 @@ public class SQLiteHelperBill extends SQLiteOpenHelper {
     public static final String USER_ID_SERVER = "user_id_serv";
 
     public static final String DATABASE_NAME = "bill.db";
-    public static final int DATABASE_VERSION = 6;
+    public static final int DATABASE_VERSION = 15;
 
     public static final String CREATE_BILL =
             "create table "+ TABLE_BILL
@@ -80,8 +80,8 @@ public class SQLiteHelperBill extends SQLiteOpenHelper {
             "create trigger "+ OPERATION_TRIGGER_INSERT
             + " after insert on " + TABLE_OPERATION
             + " BEGIN "
-            + " UPDATE " + TABLE_BILL + " SET " + BILL_VALUE + " = (select sum(case "+ OPERATION_TYPE +" when " + OPERATION_TYPE + " = 1 then " + OPERATION_VALUE
-                    + " else (-1)*" + OPERATION_VALUE + " end) from "+ TABLE_OPERATION +" where " + OPERATION_BILL + " = " + TABLE_BILL +"."+ BILL_ID + ");"
+            + " UPDATE " + TABLE_BILL + " SET " + BILL_VALUE + " = (select sum(case "+ OPERATION_TYPE +" when " + OPERATION_TYPE + " = 0zz then " + OPERATION_VALUE
+                    + " else 0 end) from "+ TABLE_OPERATION +" where " + OPERATION_BILL + " = " + TABLE_BILL +"."+ BILL_ID + ");"
             + " END;";
 
 
@@ -96,8 +96,8 @@ public class SQLiteHelperBill extends SQLiteOpenHelper {
         db.execSQL(CREATE_USERS);
     }
     public void onCreate(SQLiteDatabase db, int ver) {
-        //db.execSQL(CREATE_BILL);
-        //db.execSQL(CREATE_OPERATION);
+        db.execSQL(CREATE_BILL);
+        db.execSQL(CREATE_OPERATION);
         /*if (ver < DATABASE_VERSION)
             db.execSQL(CREATE_USERS);*/
         db.execSQL(CREATE_TRIGGER_INSERT_OPERATION);
@@ -107,9 +107,10 @@ public class SQLiteHelperBill extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (oldVersion < newVersion)
         {
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_BILL);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_OPERATION);
             //db.execSQL("DROP TABLE IF EXISTS " + TABLE_BILL);
-            //db.execSQL("DROP TABLE IF EXISTS " + TABLE_OPERATION);
-            //db.execSQL("DROP TABLE IF EXISTS " + TABLE_BILL);
+            db.execSQL("DROP TRIGGER IF EXISTS " + OPERATION_TRIGGER_INSERT );
             onCreate(db,oldVersion);
         }
     }

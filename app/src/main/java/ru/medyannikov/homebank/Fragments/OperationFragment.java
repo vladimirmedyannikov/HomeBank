@@ -21,6 +21,7 @@ import ru.medyannikov.homebank.Adapter.RecycleAdapterOperation;
 import ru.medyannikov.homebank.DataManager.SQLiteDataSource;
 import ru.medyannikov.homebank.Eventbus.BusProvider;
 import ru.medyannikov.homebank.Eventbus.OperationChangeEvent;
+import ru.medyannikov.homebank.IntentDialog.OperationIntent;
 import ru.medyannikov.homebank.Model.Operation;
 import ru.medyannikov.homebank.R;
 
@@ -57,6 +58,12 @@ public class OperationFragment extends Fragment {
 
         fab = (FloatingActionButton) view.findViewById(R.id.fabOperation);
         fab.attachToRecyclerView(recyclerView);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fabAction();
+            }
+        });
 
         updateOperation();
         /*adapterOperation = new RecycleAdapterOperation(dataSource.getOperations());
@@ -64,6 +71,12 @@ public class OperationFragment extends Fragment {
         recyclerView.setAdapter(adapterOperation);*/
 
         return view;
+    }
+
+    private void fabAction() {
+        Intent intent = new Intent(getContext(), OperationIntent.class);
+        intent.putExtra("Bill",true);
+        startActivityForResult(intent, 0);
     }
 
     public void updateOperation(){

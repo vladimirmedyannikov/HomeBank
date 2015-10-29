@@ -46,7 +46,7 @@ public class Operation {
         this.about = "about";
         this.idServ = 1;
         this.date = 121212412;
-        this.type = 1;
+        this.type = 0;
         this.value = 2d;
         this.sync = 1;
         this.idBill = 1;
@@ -76,7 +76,7 @@ public class Operation {
         this.date = date;
     }
 
-    public Integer getType() {
+    public int getType() {
         return type;
     }
 

@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.melnykov.fab.FloatingActionButton;
+import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,6 +23,8 @@ import java.util.List;
 
 import ru.medyannikov.homebank.Adapter.RecycleAdapterBill;
 import ru.medyannikov.homebank.DataManager.SQLiteDataSource;
+import ru.medyannikov.homebank.Eventbus.BusProvider;
+import ru.medyannikov.homebank.Eventbus.OperationChangeEvent;
 import ru.medyannikov.homebank.IntentDialog.BillIntent;
 import ru.medyannikov.homebank.IntentDialog.OperationIntent;
 import ru.medyannikov.homebank.Model.Bill;
@@ -46,9 +49,16 @@ public class BillsFragment extends Fragment {
         return billsFragment;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        BusProvider.getInstance().unregister(this);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if (!BusProvider.getInstance().isRegistered(this)) BusProvider.getInstance().register(this);
         View view = inflater.inflate(LAYOUT,container,false);
 
         dataSource = new SQLiteDataSource(this.getContext());
@@ -93,15 +103,15 @@ public class BillsFragment extends Fragment {
         /*billList = dataSource.getBills();
         adapter = new RecycleAdapterBill(billList);
         recyclerView.setAdapter(adapter);*/
-        if (adapter != null) {
+        /*if (adapter != null) {
             recyclerView.setAdapter(adapter);
             adapter.notifyDataSetChanged();
         }
-        else{
+        else{*/
             billList = dataSource.getBills();
             adapter = new RecycleAdapterBill(billList);
             recyclerView.setAdapter(adapter);
-        }
+       // }
     }
 
     @Override
@@ -131,5 +141,9 @@ public class BillsFragment extends Fragment {
                 break;
         }
         return true;
+    }
+    @Subscribe
+    public void onEvent(OperationChangeEvent event){
+        updateItems();
     }
 }
