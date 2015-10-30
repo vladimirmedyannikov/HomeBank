@@ -24,6 +24,7 @@ import ru.medyannikov.homebank.Eventbus.OperationChangeEvent;
 import ru.medyannikov.homebank.IntentDialog.OperationIntent;
 import ru.medyannikov.homebank.Model.Operation;
 import ru.medyannikov.homebank.R;
+import ru.medyannikov.homebank.Utils.ClassUtils;
 
 /**
  * Created by Vladimir on 13.10.2015.
@@ -75,7 +76,7 @@ public class OperationFragment extends Fragment {
 
     private void fabAction() {
         Intent intent = new Intent(getContext(), OperationIntent.class);
-        intent.putExtra("Bill",true);
+        intent.putExtra(ClassUtils.INTENT_ADD_OPERATION,true);
         startActivityForResult(intent, 0);
     }
 

@@ -49,7 +49,7 @@ public class RecycleAdapterOperation extends RecyclerView.Adapter<RecycleAdapter
         } else{
             holder.operationSync.setTextColor(holder.context.getResources().getColor(R.color.color_sync));
         }
-       holder.operationSync.setText(operationList.get(position).getSync().toString());
+       //holder.operationSync.setText(operationList.get(position).getSync().toString());
     }
 
     @Override

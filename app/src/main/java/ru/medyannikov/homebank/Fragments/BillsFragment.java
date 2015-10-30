@@ -29,6 +29,7 @@ import ru.medyannikov.homebank.IntentDialog.BillIntent;
 import ru.medyannikov.homebank.IntentDialog.OperationIntent;
 import ru.medyannikov.homebank.Model.Bill;
 import ru.medyannikov.homebank.R;
+import ru.medyannikov.homebank.Utils.ClassUtils;
 
 /**
  * Created by Vladimir on 26.09.2015.
@@ -132,6 +133,7 @@ public class BillsFragment extends Fragment {
                 //Toast.makeText(this.getContext(), "Delete " + item.getGroupId(), Toast.LENGTH_SHORT).show();
                 Snackbar.make(this.getView(), "Add operation " + item.getGroupId() + " " + billList.get(item.getGroupId()).getName(), Snackbar.LENGTH_SHORT).show();
                 Intent intent = new Intent(getContext(), OperationIntent.class);
+                intent.putExtra(ClassUtils.INTENT_ADD_OPERATION,false);
                 intent.setAction(String.valueOf(billList.get(item.getGroupId()).get_id()));
                 startActivityForResult(intent, item.getGroupId());
                 break;

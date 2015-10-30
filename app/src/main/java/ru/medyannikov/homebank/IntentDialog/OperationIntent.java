@@ -23,6 +23,7 @@ import ru.medyannikov.homebank.Eventbus.OperationChangeEvent;
 import ru.medyannikov.homebank.Model.Bill;
 import ru.medyannikov.homebank.Model.Operation;
 import ru.medyannikov.homebank.R;
+import ru.medyannikov.homebank.Utils.ClassUtils;
 
 /**
  * Created by Vladimir on 15.10.2015.
@@ -57,7 +58,7 @@ public class OperationIntent extends AppCompatActivity {
         spinnerBill = (Spinner) findViewById(R.id.editSpinerBill);
 
         Bundle extast = getIntent().getExtras();
-        res = extast.getBoolean("Bill");
+        res = extast.getBoolean(ClassUtils.INTENT_ADD_OPERATION);
 
         if (res) {
             spinnerBill.setVisibility(View.VISIBLE);
