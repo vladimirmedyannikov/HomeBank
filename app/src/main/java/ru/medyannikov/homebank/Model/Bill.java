@@ -1,12 +1,10 @@
 package ru.medyannikov.homebank.Model;
 
-import java.util.Date;
-
 /**
  * Created by Vladimir on 26.09.2015.
  */
 public class Bill {
-    private long _id;
+    private int _id;
     private String name;
     private String about;
     private Double value;
@@ -44,7 +42,7 @@ public class Bill {
         else this.sync = 0;
     }
 
-    public Bill(long _id, String name, Double value, int dependence, Long date, String about, Integer sync) {
+    public Bill(int _id, String name, Double value, int dependence, Long date, String about, Integer sync) {
         this._id = _id;
         this.name = name;
         this.value = value;
@@ -53,7 +51,7 @@ public class Bill {
         this.about = about;
         this.setSync(sync);
     }
-    public Bill(long _id, String name, Double value, int dependence, Long date, String about, Integer sync, int id_serv) {
+    public Bill(int _id, String name, Double value, int dependence, Long date, String about, Integer sync, int id_serv) {
         this._id = _id;
         this.name = name;
         this.value = value;
@@ -67,11 +65,11 @@ public class Bill {
     public Bill() {
     }
 
-    public long get_id() {
+    public int get_id() {
         return _id;
     }
 
-    public void set_id(long _id) {
+    public void set_id(int _id) {
         this._id = _id;
     }
 

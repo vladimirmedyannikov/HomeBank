@@ -64,12 +64,13 @@ public class OperationIntent extends AppCompatActivity {
             spinnerBill.setVisibility(View.VISIBLE);
             billList = dataSource.getBills();
             List<String> str = new ArrayList<String>();
-            for (Bill b:billList) {
+            /*for (Bill b:billList) {
                 str.add(b.getName());
             }
-            String[] arrayStr = str.toArray(new String[str.size()]);
-            ArrayAdapter<String> adapterBill = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arrayStr);
-            adapterBill.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            String[] arrayStr = str.toArray(new String[str.size()]);*/
+            /*ArrayAdapter<String> adapterBill = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arrayStr);
+            adapterBill.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);*/
+            ArrayAdapter adapterBill = new ArrayAdapter(this,android.R.layout.simple_spinner_item,billList);
             spinnerBill.setAdapter(adapterBill);
         }
 
@@ -92,7 +93,10 @@ public class OperationIntent extends AppCompatActivity {
                 Operation newOperation = new Operation();
                 newOperation.setAbout(about);
                 newOperation.setValue(value);
-                newOperation.setIdBill(Integer.valueOf(getIntent().getAction()));
+                if (res){
+                    newOperation.setIdBill(((Bill)spinnerBill.getSelectedItem()).get_id());
+                }
+                else newOperation.setIdBill(Integer.valueOf(getIntent().getAction()));
                 newOperation.setType(spinner.getSelectedItemPosition());
 
 
