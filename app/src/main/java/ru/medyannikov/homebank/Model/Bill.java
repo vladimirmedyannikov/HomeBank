@@ -36,7 +36,7 @@ public class Bill {
     }
 
     public void setSync(Integer sync) {
-        if(sync>0){
+        if(sync > 0){
             this.sync = 1;
         }
         else this.sync = 0;

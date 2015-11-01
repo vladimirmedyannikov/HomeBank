@@ -30,6 +30,7 @@ public class SQLiteHelperBill extends SQLiteOpenHelper {
     public static final String OPERATION_SYNC = "operat_sync";
     public static final String OPERATION_ID_SERVER = "operat_id_serv";
     public static final String OPERATION_ABOUT = "operat_about";
+    public static final String OPERATION_PREV_VALUE = "operat_prev_val";
     public static final String OPERATION_TRIGGER_INSERT = "trig_insert_operat";
 
     public static final String TABLE_USERS = "users";
@@ -42,7 +43,7 @@ public class SQLiteHelperBill extends SQLiteOpenHelper {
     public static final String USER_ID_SERVER = "user_id_serv";
 
     public static final String DATABASE_NAME = "bill.db";
-    public static final int DATABASE_VERSION = 15;
+    public static final int DATABASE_VERSION = 17;
 
     public static final String CREATE_BILL =
             "create table "+ TABLE_BILL
@@ -64,6 +65,7 @@ public class SQLiteHelperBill extends SQLiteOpenHelper {
             +OPERATION_VALUE + " real default 0, "
             +OPERATION_SYNC + " integer default 0, "
             +OPERATION_ID_SERVER + " integer default 0, "
+            +OPERATION_PREV_VALUE + " real default 0.0, "
             +OPERATION_ABOUT + " TEXT );";
 
     public static final String CREATE_USERS =
@@ -76,14 +78,22 @@ public class SQLiteHelperBill extends SQLiteOpenHelper {
             +USER_SYNC + " integer default 0, "
             +USER_ID_SERVER + " integer default 0);";
 
-    public static final String CREATE_TRIGGER_INSERT_OPERATION =
+   /* public static final String CREATE_TRIGGER_INSERT_OPERATION =
             "create trigger "+ OPERATION_TRIGGER_INSERT
             + " after insert on " + TABLE_OPERATION
             + " BEGIN "
-            + " UPDATE " + TABLE_BILL + " SET " + BILL_VALUE + " = (select sum(case "+ OPERATION_TYPE +" when " + OPERATION_TYPE + " = 0zz then " + OPERATION_VALUE
+            + " UPDATE " + TABLE_BILL + " SET " + BILL_VALUE + " = (select sum(case "+ OPERATION_TYPE +" when " + OPERATION_TYPE + " = 0 then " + OPERATION_VALUE
                     + " else 0 end) from "+ TABLE_OPERATION +" where " + OPERATION_BILL + " = " + TABLE_BILL +"."+ BILL_ID + ");"
-            + " END;";
+            + " END;";*/
+    public static final String CREATE_TRIGGER_INSERT_OPERATION =
+            "create trigger "+ OPERATION_TRIGGER_INSERT
+                    + " after insert on " + TABLE_OPERATION //last_insert_rowid()
+                    + " BEGIN "
+                    + " UPDATE " + TABLE_OPERATION + " SET " + OPERATION_PREV_VALUE + " = (select " + BILL_VALUE + " from " + TABLE_BILL + " where "+ BILL_ID +" = " + TABLE_OPERATION+"."+OPERATION_BILL+") where " + OPERATION_ID +" = last_insert_rowid();"
+                    + " UPDATE " + TABLE_BILL + " SET " + BILL_VALUE + " = (select sum( " + OPERATION_VALUE
+                    + " ) from "+ TABLE_OPERATION +" where " + OPERATION_BILL + " = " + TABLE_BILL +"."+ BILL_ID + "); "
 
+                    + " END;";
 
     public SQLiteHelperBill(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

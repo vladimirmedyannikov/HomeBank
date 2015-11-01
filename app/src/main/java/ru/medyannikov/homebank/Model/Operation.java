@@ -13,6 +13,15 @@ public class Operation {
     private int idBill;
     private String about;
     private String nameBill;
+    private Double prev_value;
+
+    public Double getPrev_value() {
+        return prev_value;
+    }
+
+    public void setPrev_value(Double prev_value) {
+        this.prev_value = prev_value;
+    }
 
     public String getNameBill() {
         return nameBill;

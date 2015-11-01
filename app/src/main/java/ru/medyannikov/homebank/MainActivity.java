@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
 
-        TabPagerFragmentAdapter pagerFragmentAdapter = new TabPagerFragmentAdapter(getSupportFragmentManager(),getApplicationContext());
+        TabPagerFragmentAdapter pagerFragmentAdapter = new TabPagerFragmentAdapter(getSupportFragmentManager(),this);
         viewPager.setAdapter(pagerFragmentAdapter);
         tabLayout.setupWithViewPager(viewPager);
 

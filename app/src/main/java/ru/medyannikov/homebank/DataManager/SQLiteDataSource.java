@@ -5,6 +5,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
+import android.graphics.Color;
+
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.DataSet;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +66,7 @@ public class SQLiteDataSource {
     public Bill insertBill(String name, String about, Double value, Long dependence, Long date, Integer sync, Integer id_serv)
     {
         ContentValues cv = new ContentValues();
-        cv.put(SQLiteHelperBill.BILL_NAME,name);
+        cv.put(SQLiteHelperBill.BILL_NAME, name);
         cv.put(SQLiteHelperBill.BILL_ABOUT, about);
         cv.put(SQLiteHelperBill.BILL_VALUE,value);
         cv.put(SQLiteHelperBill.BILL_DEPENDENCE, dependence);
@@ -68,7 +75,7 @@ public class SQLiteDataSource {
         cv.put(SQLiteHelperBill.BILL_ID_SERVER, id_serv);
 
         long insertId = db.insert(SQLiteHelperBill.TABLE_BILL, null, cv);
-        getBills();
+        /*getBills();*/
         Bill newItem = new Bill();
         return newItem;
     }
@@ -76,7 +83,7 @@ public class SQLiteDataSource {
     public List<Bill> getBills()
     {
         billList.clear();
-        Cursor cursor = db.query(SQLiteHelperBill.TABLE_BILL, allColumsBill,null,null,null,null, SQLiteHelperBill.BILL_ID + " DESC");
+        Cursor cursor = db.query(SQLiteHelperBill.TABLE_BILL, allColumsBill, null, null, null, null, SQLiteHelperBill.BILL_ID + " DESC");
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast())
@@ -86,6 +93,50 @@ public class SQLiteDataSource {
         }
         cursor.close();
         return billList;
+    }
+
+    public List<Entry> getBillEntry(int id){
+        List<Entry> entries = new ArrayList<Entry>();
+        billList.get(id);
+        for (Bill b:billList) {
+            Entry entry = new Entry(b.getValue().floatValue(),b.get_id());
+            entries.add(entry);
+        }
+        return entries;
+    }
+
+    public ArrayList<String> getBillXVlas(){
+        ArrayList<String> list = new ArrayList<String>();
+        for (Operation b:operationList) {
+            list.add(b.getDate().toString());
+        }
+        return list;
+    }
+
+    public List<LineDataSet> getBillsDataset(){
+        List<LineDataSet> dataSetList = new ArrayList<LineDataSet>();
+        for (Bill b:billList) {
+            int count = 0;
+            ArrayList<Entry> listEntry = new ArrayList<Entry>();
+            for (Operation op:operationList) {
+                if (b.get_id() == op.getIdBill())
+                {
+                    listEntry.add(new Entry(op.getPrev_value().floatValue(),count++));
+                }
+            }
+            LineDataSet set = new LineDataSet(listEntry, b.getName());
+            set.setAxisDependency(YAxis.AxisDependency.LEFT);
+            set.setColor(ColorTemplate.getHoloBlue());
+            set.setCircleColor(Color.BLACK);
+            set.setLineWidth(2f);
+            set.setCircleSize(3f);
+            set.setFillAlpha(65);
+            set.setFillColor(ColorTemplate.getHoloBlue());
+            set.setHighLightColor(Color.rgb(244, 117, 117));
+            set.setDrawCircleHole(false);
+            dataSetList.add(set);
+        }
+        return dataSetList;
     }
 
     public List<Operation> getOperations(){
@@ -100,11 +151,10 @@ public class SQLiteDataSource {
                 + SQLiteHelperBill.OPERATION_SYNC + ","
                 + SQLiteHelperBill.OPERATION_TYPE + ","
                 + SQLiteHelperBill.OPERATION_VALUE  + ","
-                + SQLiteHelperBill.BILL_NAME
+                + SQLiteHelperBill.BILL_NAME + ","
+                + SQLiteHelperBill.OPERATION_PREV_VALUE
                 + " from " + SQLiteHelperBill.TABLE_OPERATION + " left join " + SQLiteHelperBill.TABLE_BILL
                 + " on " + SQLiteHelperBill.TABLE_BILL +"."+ SQLiteHelperBill.BILL_ID + " = " + SQLiteHelperBill.OPERATION_BILL, null);
-
-        //Cursor cursor = db.query(SQLiteHelperBill.TABLE_OPERATION, allColumnsOperation, null, null, null, null, SQLiteHelperBill.OPERATION_DATE + " DESC");
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()){
@@ -133,12 +183,14 @@ public class SQLiteDataSource {
         resulOperation.setType(cursor.getInt(6));
         resulOperation.setValue(cursor.getDouble(7));
         resulOperation.setNameBill(cursor.getString(8));
+        resulOperation.setPrev_value(cursor.getDouble(9));
 
         return resulOperation;
     }
 
     public Long insertOperation(Operation newOperation) {
         ContentValues cv = new ContentValues();
+
         cv.put(SQLiteHelperBill.OPERATION_ABOUT, newOperation.getAbout());
         cv.put(SQLiteHelperBill.OPERATION_BILL, newOperation.getIdBill());
         cv.put(SQLiteHelperBill.OPERATION_DATE, newOperation.getDate());

@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import ru.medyannikov.homebank.Fragments.BillsFragment;
+import ru.medyannikov.homebank.Fragments.ChartFragment;
 import ru.medyannikov.homebank.Fragments.OperationFragment;
 import ru.medyannikov.homebank.R;
 
@@ -22,7 +23,8 @@ public class TabPagerFragmentAdapter extends FragmentPagerAdapter {
         super(fm);
         fragmentManager = fm;
         this.context = context;
-        tabs = new String[] {"Bills", "Add","Sub", "More info"};
+        //tabs = context.getResources().getStringArray(R.array.tabs);
+        tabs = new String[] {"Bills", "Operation","Diagram", "More info"};
                 //this.context.getResources().getStringArray(R.array.tabs);
     }
 
@@ -40,7 +42,7 @@ public class TabPagerFragmentAdapter extends FragmentPagerAdapter {
                 //fragment = new Fragment();
                 break;
             case 2:
-                fragment = new Fragment();
+                fragment = ChartFragment.getInstance();
                 break;
             case 3:
                 fragment = new Fragment();

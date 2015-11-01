@@ -13,5 +13,6 @@
     <string name="editOperationValue">Value operation</string>
     <string name="setOperation">Add operation</string>
     <string name="editOperationAbout">About operation</string>
+    <string name="descriptionChart">Information on your bills</string>
 
 </resources>
