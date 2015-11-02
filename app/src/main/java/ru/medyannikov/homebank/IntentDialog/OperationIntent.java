@@ -13,8 +13,11 @@ import android.widget.Toast;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import de.greenrobot.event.EventBus;
 import ru.medyannikov.homebank.DataManager.SQLiteDataSource;
@@ -92,11 +95,15 @@ public class OperationIntent extends AppCompatActivity {
                 Double value = Double.valueOf(editValue.getText().toString());
                 Operation newOperation = new Operation();
                 newOperation.setAbout(about);
-                newOperation.setValue(value);
+                if (spinner.getSelectedItemPosition() == 0){
+                newOperation.setValue(value);}else newOperation.setValue(value*(-1));
                 if (res){
-                    newOperation.setIdBill(((Bill)spinnerBill.getSelectedItem()).get_id());
+                    newOperation.setIdBill(((Bill) spinnerBill.getSelectedItem()).get_id());
                 }
                 else newOperation.setIdBill(Integer.valueOf(getIntent().getAction()));
+                /*SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+                simpleDateFormat.format(simpleDateFormat);
+                newOperation.setDate(new Date().);*/
                 newOperation.setType(spinner.getSelectedItemPosition());
 
 

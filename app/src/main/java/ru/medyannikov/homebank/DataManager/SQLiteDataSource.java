@@ -15,6 +15,7 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import ru.medyannikov.homebank.Model.Bill;
 import ru.medyannikov.homebank.Model.Operation;
@@ -116,22 +117,20 @@ public class SQLiteDataSource {
     public List<LineDataSet> getBillsDataset(){
         List<LineDataSet> dataSetList = new ArrayList<LineDataSet>();
         for (Bill b:billList) {
-            int count = 0;
             ArrayList<Entry> listEntry = new ArrayList<Entry>();
             for (Operation op:operationList) {
-                if (b.get_id() == op.getIdBill())
-                {
-                    listEntry.add(new Entry(op.getPrev_value().floatValue(),count++));
+                if (b.get_id() == op.getIdBill()) {
+                    listEntry.add(new Entry(op.getPrev_value().floatValue(),operationList.indexOf(op)));
                 }
             }
             LineDataSet set = new LineDataSet(listEntry, b.getName());
             set.setAxisDependency(YAxis.AxisDependency.LEFT);
-            set.setColor(Color.CYAN);
+            set.setColor(Color.rgb(new Random().nextInt(255),new Random().nextInt(255),new Random().nextInt(255)));
             set.setCircleColor(Color.BLACK);
-            set.setLineWidth(2f);
-            set.setCircleSize(3f);
+            set.setLineWidth(1f);
+            set.setCircleSize(2f);
             set.setFillAlpha(65);
-            set.setFillColor(ColorTemplate.getHoloBlue());
+            set.setFillColor(Color.rgb(new Random().nextInt(255),new Random().nextInt(255),new Random().nextInt(255)));
             set.setHighLightColor(Color.rgb(244, 117, 117));
             set.setDrawCircleHole(false);
             set.setValueTextColor(Color.BLACK);
@@ -178,7 +177,7 @@ public class SQLiteDataSource {
 
         resulOperation.setId(cursor.getInt(0));
         resulOperation.setAbout(cursor.getString(2));
-        resulOperation.setDate(cursor.getInt(4));
+        resulOperation.setDate(cursor.getString(4));
         resulOperation.setIdBill(cursor.getInt(3));
         resulOperation.setIdServ(cursor.getInt(1));
         resulOperation.setSync(cursor.getInt(5));

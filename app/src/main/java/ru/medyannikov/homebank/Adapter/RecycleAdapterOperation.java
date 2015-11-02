@@ -49,6 +49,7 @@ public class RecycleAdapterOperation extends RecyclerView.Adapter<RecycleAdapter
         } else{
             holder.operationSync.setTextColor(holder.context.getResources().getColor(R.color.color_sync));
         }
+        holder.operationAbout.setText(operationList.get(position).getDate());
        //holder.operationSync.setText(operationList.get(position).getSync().toString());
     }
 

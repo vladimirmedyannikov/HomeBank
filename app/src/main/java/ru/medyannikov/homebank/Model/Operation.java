@@ -1,12 +1,16 @@
 package ru.medyannikov.homebank.Model;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 /**
  * Created by Vladimir on 13.10.2015.
  */
 public class Operation {
     private int id;
     private int idServ;
-    private int date;
+    private String date;
     private int type;
     private Double value;
     private int sync;
@@ -39,7 +43,7 @@ public class Operation {
         this.about = about;
     }
 
-    public Operation(int id, int idServ, int date, int type, double value, int sync, int idBill) {
+    public Operation(int id, int idServ, String date, int type, double value, int sync, int idBill) {
         this.id = id;
 
         this.idServ = idServ;
@@ -54,7 +58,7 @@ public class Operation {
         this.id = 0;
         this.about = "about";
         this.idServ = 1;
-        this.date = 121212412;
+        this.date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
         this.type = 0;
         this.value = 2d;
         this.sync = 1;
@@ -77,11 +81,11 @@ public class Operation {
         this.idServ = idServ;
     }
 
-    public Integer getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(int date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

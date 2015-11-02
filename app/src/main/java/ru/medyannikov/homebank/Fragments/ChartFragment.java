@@ -30,6 +30,7 @@ public class ChartFragment extends Fragment {
     private LineChart lineChart;
     private SQLiteDataSource dataSource;
     private ArrayList<Entry> listData;
+    private static ChartFragment fragment;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,70 +53,12 @@ public class ChartFragment extends Fragment {
         ll.setLineWidth(4f);
         ll.setTextColor(Color.BLACK);
         ll.setTextSize(12f);
-// .. and more styling options
-
         leftAxis.addLimitLine(ll);
 
-//new String [] {"1", "2","50"}
-
-
-        /*LineDataSet lineDataSet = new LineDataSet(dataSource.getBillEntrys(),"Bills");
-        LineData lineData = new LineData();
-        lineDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
-        lineDataSet.setColor(ColorTemplate.getHoloBlue());
-        lineDataSet.setCircleColor(Color.WHITE);
-        lineDataSet.setLineWidth(2f);
-        lineDataSet.setCircleSize(3f);
-        lineDataSet.setFillAlpha(65);
-        lineDataSet.setFillColor(ColorTemplate.getHoloBlue());
-        lineDataSet.setHighLightColor(Color.rgb(244, 117, 117));
-        lineDataSet.setDrawCircleHole(false);
-
-        lineData.addDataSet(lineDataSet);
-        lineChart.setData(lineData);*/
-        int range = 5;
-        int count = 5;
-
-        ArrayList<String> xVals = new ArrayList<String>();
-        for (int i = 0; i < count; i++) {
-            xVals.add((i) + "");
-        }
-
-        ArrayList<Entry> yVals1 = new ArrayList<Entry>();
-
-        for (int i = 0; i < count; i++) {
-            float mult = range / 2f;
-            float val = (float) (Math.random() * mult) + 50;// + (float)
-            // ((mult *
-            // 0.1) / 10);
-            yVals1.add(new Entry(val, i));
-        }
-
-        // create a dataset and give it a type
-        LineDataSet set1 = new LineDataSet(yVals1, "DataSet 1");
-
-        ArrayList<Entry> yVals2 = new ArrayList<Entry>();
-
-        for (int i = 0; i < count; i++) {
-            float mult = range;
-            float val = (float) (Math.random() * mult) + 450;// + (float)
-            // ((mult *
-            // 0.1) / 10);
-            yVals2.add(new Entry(val, i));
-        }
-
-        // create a dataset and give it a type
-        LineDataSet set2 = new LineDataSet(yVals2, "DataSet 2");
-
-
-        ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
-        dataSets.add(set2);
-        dataSets.add(set1); // add the datasets
-
-        // create a data object with the datasets
         LineData data = new LineData(dataSource.getBillXVlas(), dataSource.getBillsDataset());
-        data.setValueTextColor(Color.WHITE);
+        data.setValueTextColor(Color.BLACK);
         data.setValueTextSize(9f);
+
 
         lineChart.setData(data);
 
@@ -127,7 +70,9 @@ public class ChartFragment extends Fragment {
 
     public static  ChartFragment getInstance(){
         Bundle bundle = new Bundle();
-        ChartFragment fragment = new ChartFragment();
+        if (fragment == null){
+            fragment = new ChartFragment();
+        }
         fragment.setArguments(bundle);
         return fragment;
     }
