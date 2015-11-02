@@ -126,7 +126,7 @@ public class SQLiteDataSource {
             }
             LineDataSet set = new LineDataSet(listEntry, b.getName());
             set.setAxisDependency(YAxis.AxisDependency.LEFT);
-            set.setColor(ColorTemplate.getHoloBlue());
+            set.setColor(Color.CYAN);
             set.setCircleColor(Color.BLACK);
             set.setLineWidth(2f);
             set.setCircleSize(3f);
@@ -134,6 +134,8 @@ public class SQLiteDataSource {
             set.setFillColor(ColorTemplate.getHoloBlue());
             set.setHighLightColor(Color.rgb(244, 117, 117));
             set.setDrawCircleHole(false);
+            set.setValueTextColor(Color.BLACK);
+
             dataSetList.add(set);
         }
         return dataSetList;

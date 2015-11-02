@@ -43,7 +43,7 @@ public class SQLiteHelperBill extends SQLiteOpenHelper {
     public static final String USER_ID_SERVER = "user_id_serv";
 
     public static final String DATABASE_NAME = "bill.db";
-    public static final int DATABASE_VERSION = 17;
+    public static final int DATABASE_VERSION = 18;
 
     public static final String CREATE_BILL =
             "create table "+ TABLE_BILL
@@ -89,10 +89,10 @@ public class SQLiteHelperBill extends SQLiteOpenHelper {
             "create trigger "+ OPERATION_TRIGGER_INSERT
                     + " after insert on " + TABLE_OPERATION //last_insert_rowid()
                     + " BEGIN "
-                    + " UPDATE " + TABLE_OPERATION + " SET " + OPERATION_PREV_VALUE + " = (select " + BILL_VALUE + " from " + TABLE_BILL + " where "+ BILL_ID +" = " + TABLE_OPERATION+"."+OPERATION_BILL+") where " + OPERATION_ID +" = last_insert_rowid();"
+
                     + " UPDATE " + TABLE_BILL + " SET " + BILL_VALUE + " = (select sum( " + OPERATION_VALUE
                     + " ) from "+ TABLE_OPERATION +" where " + OPERATION_BILL + " = " + TABLE_BILL +"."+ BILL_ID + "); "
-
+                    + " UPDATE " + TABLE_OPERATION + " SET " + OPERATION_PREV_VALUE + " = (select " + BILL_VALUE + " from " + TABLE_BILL + " where "+ BILL_ID +" = " + TABLE_OPERATION+"."+OPERATION_BILL+") where " + OPERATION_ID +" = last_insert_rowid();"
                     + " END;";
 
     public SQLiteHelperBill(Context context) {
