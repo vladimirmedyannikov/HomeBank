@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import ru.medyannikov.homebank.Activity.ActivityBillInfo;
 import ru.medyannikov.homebank.Adapter.RecycleAdapterBill;
 import ru.medyannikov.homebank.DataManager.SQLiteDataSource;
 import ru.medyannikov.homebank.Eventbus.BusProvider;
@@ -123,16 +124,19 @@ public class BillsFragment extends Fragment {
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
+        Intent intent = null;
         switch (item.getItemId())
         {
             case 1:
                 //Toast.makeText(this.getContext(), "Info " + item.getGroupId(), Toast.LENGTH_SHORT).show();
                 Snackbar.make(this.getView(), "Info " + item.getGroupId() + " " + billList.get(item.getGroupId()).getName(), Snackbar.LENGTH_SHORT).show();
+                intent = new Intent(getContext(), ActivityBillInfo.class);
+                startActivity(intent);
                 break;
             case 2:
                 //Toast.makeText(this.getContext(), "Delete " + item.getGroupId(), Toast.LENGTH_SHORT).show();
                 Snackbar.make(this.getView(), "Add operation " + item.getGroupId() + " " + billList.get(item.getGroupId()).getName(), Snackbar.LENGTH_SHORT).show();
-                Intent intent = new Intent(getContext(), OperationIntent.class);
+                intent = new Intent(getContext(), OperationIntent.class);
                 intent.putExtra(ClassUtils.INTENT_ADD_OPERATION,false);
                 intent.setAction(String.valueOf(billList.get(item.getGroupId()).get_id()));
                 startActivityForResult(intent, item.getGroupId());
