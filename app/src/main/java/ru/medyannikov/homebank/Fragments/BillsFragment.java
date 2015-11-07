@@ -131,6 +131,7 @@ public class BillsFragment extends Fragment {
                 //Toast.makeText(this.getContext(), "Info " + item.getGroupId(), Toast.LENGTH_SHORT).show();
                 Snackbar.make(this.getView(), "Info " + item.getGroupId() + " " + billList.get(item.getGroupId()).getName(), Snackbar.LENGTH_SHORT).show();
                 intent = new Intent(getContext(), ActivityBillInfo.class);
+                intent.putExtra("billInfo",item.getGroupId());
                 startActivity(intent);
                 break;
             case 2:

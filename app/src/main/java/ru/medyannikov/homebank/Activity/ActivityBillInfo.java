@@ -6,6 +6,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import ru.medyannikov.homebank.DataManager.SQLiteDataSource;
+import ru.medyannikov.homebank.Model.Bill;
 import ru.medyannikov.homebank.R;
 
 /**
@@ -29,6 +31,10 @@ public class ActivityBillInfo extends AppCompatActivity {
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        Bundle bundle = getIntent().getExtras();
+        Bill bill = SQLiteDataSource.billList.get(bundle.getInt("billInfo"));
+        getSupportActionBar().setTitle(bill.getName());
 
 
 
