@@ -129,14 +129,14 @@ public class BillsFragment extends Fragment {
         {
             case 1:
                 //Toast.makeText(this.getContext(), "Info " + item.getGroupId(), Toast.LENGTH_SHORT).show();
-                Snackbar.make(this.getView(), "Info " + item.getGroupId() + " " + billList.get(item.getGroupId()).getName(), Snackbar.LENGTH_SHORT).show();
+                //Snackbar.make(this.getView(), "Info " + item.getGroupId() + " " + billList.get(item.getGroupId()).getName(), Snackbar.LENGTH_SHORT).show();
                 intent = new Intent(getContext(), ActivityBillInfo.class);
-                intent.putExtra("billInfo",item.getGroupId());
+                intent.putExtra(ClassUtils.INTENT_BILL_INFO,item.getGroupId());
                 startActivity(intent);
                 break;
             case 2:
                 //Toast.makeText(this.getContext(), "Delete " + item.getGroupId(), Toast.LENGTH_SHORT).show();
-                Snackbar.make(this.getView(), "Add operation " + item.getGroupId() + " " + billList.get(item.getGroupId()).getName(), Snackbar.LENGTH_SHORT).show();
+                //Snackbar.make(this.getView(), "Add operation " + item.getGroupId() + " " + billList.get(item.getGroupId()).getName(), Snackbar.LENGTH_SHORT).show();
                 intent = new Intent(getContext(), OperationIntent.class);
                 intent.putExtra(ClassUtils.INTENT_ADD_OPERATION,false);
                 intent.setAction(String.valueOf(billList.get(item.getGroupId()).get_id()));

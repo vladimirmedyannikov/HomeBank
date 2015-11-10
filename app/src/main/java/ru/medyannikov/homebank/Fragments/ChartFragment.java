@@ -30,7 +30,9 @@ public class ChartFragment extends Fragment {
     private LineChart lineChart;
     private SQLiteDataSource dataSource;
     private ArrayList<Entry> listData;
-    private static ChartFragment fragment;
+
+    private Bill bill = null;
+    LineData data;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,10 +57,17 @@ public class ChartFragment extends Fragment {
         ll.setTextSize(12f);
         leftAxis.addLimitLine(ll);
 
-        LineData data = new LineData(dataSource.getBillXVlas(), dataSource.getBillsDataset());
-        data.setValueTextColor(Color.BLACK);
-        data.setValueTextSize(9f);
 
+
+        if (bill == null){
+            LineData data = new LineData(dataSource.getBillXVlas(), dataSource.getBillsDataset());
+            data.setValueTextColor(Color.BLACK);
+            data.setValueTextSize(9f);
+        } else {
+            LineData data = new LineData(dataSource.getBillXVlas(bill), dataSource.getBillsDataset(bill));
+            data.setValueTextColor(Color.BLACK);
+            data.setValueTextSize(9f);
+        }
 
         lineChart.setData(data);
 
@@ -70,10 +79,20 @@ public class ChartFragment extends Fragment {
 
     public static  ChartFragment getInstance(){
         Bundle bundle = new Bundle();
-        if (fragment == null){
-            fragment = new ChartFragment();
-        }
+        /*if (fragment == null){*/
+        ChartFragment fragment = new ChartFragment();
+       // }
         fragment.setArguments(bundle);
         return fragment;
+    }
+
+    public static ChartFragment getInstance(Bill bill){
+        ChartFragment fragment = getInstance();
+        fragment.setIdBill(bill);
+        return fragment;
+    }
+
+    public void setIdBill(Bill idBill) {
+        this.bill = idBill;
     }
 }

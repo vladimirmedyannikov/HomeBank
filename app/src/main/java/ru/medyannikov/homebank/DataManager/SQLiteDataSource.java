@@ -49,6 +49,7 @@ public class SQLiteDataSource {
 
     public final static List<Bill> billList = new ArrayList<Bill>();
     public final static List<Operation> operationList = new ArrayList<Operation>();
+    public final static List<Operation> tempOperationList = new ArrayList<Operation>();
 
     public SQLiteDataSource(Context context)
     {
@@ -96,7 +97,7 @@ public class SQLiteDataSource {
         return billList;
     }
 
-    public List<Entry> getBillEntry(int id){
+    /*public List<Entry> getBillEntry(int id){
         List<Entry> entries = new ArrayList<Entry>();
         billList.get(id);
         for (Bill b:billList) {
@@ -104,11 +105,19 @@ public class SQLiteDataSource {
             entries.add(entry);
         }
         return entries;
-    }
+    }*/
 
     public ArrayList<String> getBillXVlas(){
         ArrayList<String> list = new ArrayList<String>();
         for (Operation b:operationList) {
+            list.add(b.getDate().toString());
+        }
+        return list;
+    }
+
+    public ArrayList<String> getBillXVlas(Bill bill){
+        ArrayList<String> list = new ArrayList<String>();
+        for (Operation b:getOperations(bill.get_id())) {
             list.add(b.getDate().toString());
         }
         return list;
@@ -140,9 +149,33 @@ public class SQLiteDataSource {
         return dataSetList;
     }
 
+    public List<LineDataSet> getBillsDataset(Bill bill){
+        List<LineDataSet> dataSetList = new ArrayList<LineDataSet>();
+        ArrayList<Entry> listEntry = new ArrayList<Entry>();
+
+        List <Operation> list = getOperations(bill.get_id());
+        for (Operation op:list) {
+            listEntry.add(new Entry(op.getPrev_value().floatValue(), list.indexOf(op)));
+        }
+        LineDataSet set = new LineDataSet(listEntry, bill.getName());
+        set.setAxisDependency(YAxis.AxisDependency.LEFT);
+        set.setColor(Color.rgb(new Random().nextInt(255),new Random().nextInt(255),new Random().nextInt(255)));
+        set.setCircleColor(Color.BLACK);
+        set.setLineWidth(1f);
+        set.setCircleSize(2f);
+        set.setFillAlpha(65);
+        set.setFillColor(Color.rgb(new Random().nextInt(255),new Random().nextInt(255),new Random().nextInt(255)));
+        set.setHighLightColor(Color.rgb(244, 117, 117));
+        set.setDrawCircleHole(false);
+        set.setValueTextColor(Color.BLACK);
+
+        dataSetList.add(set);
+
+        return dataSetList;
+    }
+
     public List<Operation> getOperations(){
         operationList.clear();
-
         Cursor cursor = db.rawQuery("Select "
                 + SQLiteHelperBill.TABLE_OPERATION + "." + SQLiteHelperBill.OPERATION_ID + ","
                 + SQLiteHelperBill.OPERATION_ID_SERVER + ","
@@ -164,6 +197,32 @@ public class SQLiteDataSource {
         }
         cursor.close();
         return operationList;
+    }
+
+    public List<Operation> getOperations(int idBill){
+        tempOperationList.clear();
+        Cursor cursor = db.rawQuery("Select "
+                + SQLiteHelperBill.TABLE_OPERATION + "." + SQLiteHelperBill.OPERATION_ID + ","
+                + SQLiteHelperBill.OPERATION_ID_SERVER + ","
+                + SQLiteHelperBill.OPERATION_ABOUT + ","
+                + SQLiteHelperBill.OPERATION_BILL + ","
+                + SQLiteHelperBill.OPERATION_DATE + ","
+                + SQLiteHelperBill.OPERATION_SYNC + ","
+                + SQLiteHelperBill.OPERATION_TYPE + ","
+                + SQLiteHelperBill.OPERATION_VALUE  + ","
+                + SQLiteHelperBill.BILL_NAME + ","
+                + SQLiteHelperBill.OPERATION_PREV_VALUE
+                + " from " + SQLiteHelperBill.TABLE_OPERATION + " left join " + SQLiteHelperBill.TABLE_BILL
+                + " on " + SQLiteHelperBill.TABLE_BILL +"."+ SQLiteHelperBill.BILL_ID + " = " + SQLiteHelperBill.OPERATION_BILL
+                + " where " + SQLiteHelperBill.TABLE_OPERATION + "." + SQLiteHelperBill.OPERATION_BILL + " = " + idBill, null);
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            tempOperationList.add(cursorToOperation(cursor));
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return tempOperationList;
     }
 
     private Bill cursorToBill(Cursor cursor) {

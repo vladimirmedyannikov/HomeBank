@@ -1,3 +1,4 @@
+
 <android.support.design.widget.CoordinatorLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -6,6 +7,7 @@
         android:layout_height="match_parent"
         xmlns:tools="http://schemas.android.com/tools"
         tools:context=".ActivityBillInfo">
+
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -19,6 +21,20 @@
                 android:titleTextColor="@color/color_main"
                 app:theme="@style/MyActionBar"
                 xmlns:app="http://schemas.android.com/apk/res-auto"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/valueBill"
+                android:background="?android:colorBackground"
+                android:gravity="center"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/aboutBill"/>
+
             <android.support.design.widget.TabLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

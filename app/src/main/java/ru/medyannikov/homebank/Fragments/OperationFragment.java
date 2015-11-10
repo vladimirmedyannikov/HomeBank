@@ -22,6 +22,7 @@ import ru.medyannikov.homebank.DataManager.SQLiteDataSource;
 import ru.medyannikov.homebank.Eventbus.BusProvider;
 import ru.medyannikov.homebank.Eventbus.OperationChangeEvent;
 import ru.medyannikov.homebank.IntentDialog.OperationIntent;
+import ru.medyannikov.homebank.Model.Bill;
 import ru.medyannikov.homebank.Model.Operation;
 import ru.medyannikov.homebank.R;
 import ru.medyannikov.homebank.Utils.ClassUtils;
@@ -36,6 +37,7 @@ public class OperationFragment extends Fragment {
     private SQLiteDataSource dataSource;
     private List<Operation> operationList;
     private FloatingActionButton fab;
+    private Bill bill = null;
 
     @Override
     public void onResume() {
@@ -86,9 +88,16 @@ public class OperationFragment extends Fragment {
             adapterOperation.notifyDataSetChanged();
         }
         else{*/
+        if (bill == null){
             operationList = dataSource.getOperations();
             adapterOperation = new RecycleAdapterOperation(operationList);
             recyclerView.setAdapter(adapterOperation);
+        }
+        else {
+            operationList = dataSource.getOperations(bill.get_id());
+            adapterOperation = new RecycleAdapterOperation(operationList);
+            recyclerView.setAdapter(adapterOperation);
+        }
        //, }
     }
 
@@ -103,6 +112,15 @@ public class OperationFragment extends Fragment {
         Bundle bundle = new Bundle();
         OperationFragment fragment = new OperationFragment();
         fragment.setArguments(bundle);
+        return fragment;
+    }
+
+    public static OperationFragment getInstance(Bill bill) {
+
+        Bundle bundle = new Bundle();
+        OperationFragment fragment = new OperationFragment();
+        fragment.setArguments(bundle);
+        fragment.bill = bill;
         return fragment;
     }
 
