@@ -32,7 +32,7 @@ public class ChartFragment extends Fragment {
     private ArrayList<Entry> listData;
 
     private Bill bill = null;
-    LineData data;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,21 +58,18 @@ public class ChartFragment extends Fragment {
         leftAxis.addLimitLine(ll);
 
 
-
+        LineData data = null;
         if (bill == null){
-            LineData data = new LineData(dataSource.getBillXVlas(), dataSource.getBillsDataset());
+            data = new LineData(dataSource.getBillXVlas(), dataSource.getBillsDataset());
             data.setValueTextColor(Color.BLACK);
             data.setValueTextSize(9f);
         } else {
-            LineData data = new LineData(dataSource.getBillXVlas(bill), dataSource.getBillsDataset(bill));
+            data = new LineData(dataSource.getBillXVlas(bill), dataSource.getBillsDataset(bill));
             data.setValueTextColor(Color.BLACK);
             data.setValueTextSize(9f);
         }
 
         lineChart.setData(data);
-
-
-
 
         return view;
     }
