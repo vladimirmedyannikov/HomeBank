@@ -199,6 +199,20 @@ public class SQLiteDataSource {
         return operationList;
     }
 
+    public Bill getBill(int idBill){
+        Bill bill = null;
+        Cursor cursor = db.query(SQLiteHelperBill.TABLE_BILL, allColumsBill, SQLiteHelperBill.BILL_ID + " = " + idBill, null, null, null, SQLiteHelperBill.BILL_ID + " DESC");
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast())
+        {
+            bill = cursorToBill(cursor);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return bill;
+    }
+
     public List<Operation> getOperations(int idBill){
         tempOperationList.clear();
         Cursor cursor = db.rawQuery("Select "

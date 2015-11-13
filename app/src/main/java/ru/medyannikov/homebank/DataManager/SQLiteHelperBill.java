@@ -43,7 +43,7 @@ public class SQLiteHelperBill extends SQLiteOpenHelper {
     public static final String USER_ID_SERVER = "user_id_serv";
 
     public static final String DATABASE_NAME = "bill.db";
-    public static final int DATABASE_VERSION = 21;
+    public static final int DATABASE_VERSION = 22;
 
     public static final String CREATE_BILL =
             "create table "+ TABLE_BILL

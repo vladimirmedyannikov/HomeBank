@@ -42,6 +42,7 @@ public class OperationIntent extends AppCompatActivity {
     private EventBus eventBus;
     private List<Bill> billList;
     private boolean res = false;
+    private int idBill = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,22 +63,35 @@ public class OperationIntent extends AppCompatActivity {
 
         Bundle extast = getIntent().getExtras();
         res = extast.getBoolean(ClassUtils.INTENT_ADD_OPERATION);
+        if (extast.containsKey(ClassUtils.INTENT_BILL_INFO)) {
+            idBill = extast.getInt(ClassUtils.INTENT_BILL_INFO);
+        }
 
         if (res) {
             spinnerBill.setVisibility(View.VISIBLE);
             billList = dataSource.getBills();
             List<String> str = new ArrayList<String>();
+        }
             /*for (Bill b:billList) {
                 str.add(b.getName());
             }
             String[] arrayStr = str.toArray(new String[str.size()]);*/
             /*ArrayAdapter<String> adapterBill = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arrayStr);
             adapterBill.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);*/
-            ArrayAdapter adapterBill = new ArrayAdapter(this,android.R.layout.simple_spinner_item,billList);
-            spinnerBill.setAdapter(adapterBill);
-        }
 
-        Toast.makeText(this,getIntent().getAction(),Toast.LENGTH_SHORT).show();
+            ArrayAdapter adapterBill = null;
+            if (idBill != 0){
+                adapterBill = new ArrayAdapter(this,android.R.layout.simple_spinner_dropdown_item,new Bill [] {dataSource.getBill(idBill)});
+            }
+            else {
+                adapterBill = new ArrayAdapter(this,android.R.layout.simple_spinner_item,billList);
+            }
+
+            spinnerBill.setAdapter(adapterBill);
+
+
+
+        //Toast.makeText(this,getIntent().getAction(),Toast.LENGTH_SHORT).show();
 
         buttonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,7 +114,7 @@ public class OperationIntent extends AppCompatActivity {
                 if (res){
                     newOperation.setIdBill(((Bill) spinnerBill.getSelectedItem()).get_id());
                 }
-                else newOperation.setIdBill(Integer.valueOf(getIntent().getAction()));
+                else newOperation.setIdBill(getIntent().getIntExtra(ClassUtils.INTENT_BILL_INFO,0));
                 /*SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
                 simpleDateFormat.format(simpleDateFormat);
                 newOperation.setDate(new Date().);*/

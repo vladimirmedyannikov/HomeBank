@@ -139,7 +139,8 @@ public class BillsFragment extends Fragment {
                 //Snackbar.make(this.getView(), "Add operation " + item.getGroupId() + " " + billList.get(item.getGroupId()).getName(), Snackbar.LENGTH_SHORT).show();
                 intent = new Intent(getContext(), OperationIntent.class);
                 intent.putExtra(ClassUtils.INTENT_ADD_OPERATION,false);
-                intent.setAction(String.valueOf(billList.get(item.getGroupId()).get_id()));
+                intent.putExtra(ClassUtils.INTENT_BILL_INFO, billList.get(item.getGroupId()).get_id());
+                //intent.setAction(String.valueOf(billList.get(item.getGroupId()).get_id()));
                 startActivityForResult(intent, item.getGroupId());
                 break;
             case 3:

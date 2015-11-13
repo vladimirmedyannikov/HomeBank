@@ -14,5 +14,6 @@
     <string name="setOperation">Add operation</string>
     <string name="editOperationAbout">About operation</string>
     <string name="descriptionChart">Information on your bills</string>
+    <string name="balanceBill">Balance</string>
 
 </resources>

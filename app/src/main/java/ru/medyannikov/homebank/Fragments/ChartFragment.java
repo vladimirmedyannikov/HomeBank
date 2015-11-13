@@ -2,6 +2,7 @@ package ru.medyannikov.homebank.Fragments;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -20,6 +21,8 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import java.util.ArrayList;
 
 import ru.medyannikov.homebank.DataManager.SQLiteDataSource;
+import ru.medyannikov.homebank.Eventbus.BusProvider;
+import ru.medyannikov.homebank.Eventbus.OperationChangeEvent;
 import ru.medyannikov.homebank.Model.Bill;
 import ru.medyannikov.homebank.R;
 
@@ -35,7 +38,14 @@ public class ChartFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        if (!BusProvider.getInstance().isRegistered(this)) {BusProvider.getInstance().register(this);}
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onDestroy() {
+        BusProvider.getInstance().unregister(this);
+        super.onDestroy();
     }
 
     @Nullable
@@ -50,14 +60,23 @@ public class ChartFragment extends Fragment {
 
         YAxis leftAxis = lineChart.getAxisLeft();
 
-        LimitLine ll = new LimitLine(140f, "Critical Blood Pressure");
+        LimitLine ll = new LimitLine(100000f, "Good value");
         ll.setLineColor(Color.RED);
-        ll.setLineWidth(4f);
+        ll.setLineWidth(1f);
         ll.setTextColor(Color.BLACK);
-        ll.setTextSize(12f);
+        ll.setTextSize(6f);
         leftAxis.addLimitLine(ll);
 
 
+        LineData data = updateChart();
+
+        lineChart.setData(data);
+
+        return view;
+    }
+
+    @NonNull
+    private LineData updateChart() {
         LineData data = null;
         if (bill == null){
             data = new LineData(dataSource.getBillXVlas(), dataSource.getBillsDataset());
@@ -68,10 +87,7 @@ public class ChartFragment extends Fragment {
             data.setValueTextColor(Color.BLACK);
             data.setValueTextSize(9f);
         }
-
-        lineChart.setData(data);
-
-        return view;
+        return data;
     }
 
     public static  ChartFragment getInstance(){
@@ -91,5 +107,10 @@ public class ChartFragment extends Fragment {
 
     public void setIdBill(Bill idBill) {
         this.bill = idBill;
+    }
+
+    public void onEvent(OperationChangeEvent event){
+        LineData data = updateChart();
+        lineChart.setData(data);
     }
 }

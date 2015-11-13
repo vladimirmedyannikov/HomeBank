@@ -21,20 +21,6 @@
                 android:titleTextColor="@color/color_main"
                 app:theme="@style/MyActionBar"
                 xmlns:app="http://schemas.android.com/apk/res-auto"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/valueBill"
-                android:background="?android:colorBackground"
-                android:gravity="center"
-                android:textSize="20sp"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/aboutBill"/>
-
             <android.support.design.widget.TabLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -47,6 +33,39 @@
                 tabs:tabBackground="@color/accent_material_light"
                 android:background="@color/color_main">
             </android.support.design.widget.TabLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:background="?android:colorBackground"
+                    android:gravity="center"
+                    android:id="@+id/balance"
+                    android:textSize="20sp"
+                    android:layout_alignParentLeft="true"
+                    android:text="@string/balanceBill"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/valueBill"
+                    android:background="?android:colorBackground"
+                    android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@id/balance"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    />
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:colorBackground"
+                android:padding="5dp"
+                android:id="@+id/aboutBill"/>
+
+
         </android.support.design.widget.AppBarLayout>
         <android.support.v4.view.ViewPager
             android:layout_width="match_parent"

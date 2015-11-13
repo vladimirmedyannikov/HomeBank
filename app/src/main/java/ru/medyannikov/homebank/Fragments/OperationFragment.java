@@ -78,7 +78,13 @@ public class OperationFragment extends Fragment {
 
     private void fabAction() {
         Intent intent = new Intent(getContext(), OperationIntent.class);
-        intent.putExtra(ClassUtils.INTENT_ADD_OPERATION,true);
+
+        if (bill != null) {
+            intent.putExtra(ClassUtils.INTENT_BILL_INFO, bill.get_id());
+            intent.putExtra(ClassUtils.INTENT_ADD_OPERATION,false);
+        } else {
+            intent.putExtra(ClassUtils.INTENT_ADD_OPERATION,true);
+        }
         startActivityForResult(intent, 0);
     }
 

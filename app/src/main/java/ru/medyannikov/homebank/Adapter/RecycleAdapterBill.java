@@ -1,6 +1,8 @@
 package ru.medyannikov.homebank.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.ContextMenu;
@@ -14,8 +16,10 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import ru.medyannikov.homebank.Activity.ActivityBillInfo;
 import ru.medyannikov.homebank.Model.Bill;
 import ru.medyannikov.homebank.R;
+import ru.medyannikov.homebank.Utils.ClassUtils;
 
 /**
  * Created by Vladimir on 26.09.2015.
@@ -64,13 +68,16 @@ public class RecycleAdapterBill extends RecyclerView.Adapter<RecycleAdapterBill.
         @Override
         public void onClick(View v) {
             //Toast.makeText(v.getContext(), name.getText(), Toast.LENGTH_SHORT).show();
-            Snackbar.make(v,name.getText(),Snackbar.LENGTH_SHORT)
+            /*Snackbar.make(v,name.getText(),Snackbar.LENGTH_SHORT)
                     .setAction("Wow", new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
 
                         }
-                    }).show();
+                    }).show();*/
+            Intent intent = new Intent(v.getContext(), ActivityBillInfo.class);
+            intent.putExtra(ClassUtils.INTENT_BILL_INFO,v.getId());
+            v.getContext().startActivity(intent);
         }
 
         @Override
