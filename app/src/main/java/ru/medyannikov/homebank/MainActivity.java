@@ -1,7 +1,9 @@
 package ru.medyannikov.homebank;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 
@@ -14,10 +16,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
 
 import de.greenrobot.event.EventBus;
+import ru.medyannikov.homebank.Activity.ApartamentsActivity;
 import ru.medyannikov.homebank.Adapter.TabPagerFragmentAdapter;
 import ru.medyannikov.homebank.Eventbus.BusProvider;
 import ru.medyannikov.homebank.Eventbus.OperationChangeEvent;
@@ -30,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private ActionBarDrawerToggle drawerToggle;
     private Toolbar toolbar;
     private EventBus eventBus;
+    private NavigationView navigationView;
 
 
     @Override
@@ -48,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        navigationView = (NavigationView) findViewById(R.id.drawerMenu);
 
         TabPagerFragmentAdapter pagerFragmentAdapter = new TabPagerFragmentAdapter(getSupportFragmentManager(),this);
         viewPager.setAdapter(pagerFragmentAdapter);
@@ -76,10 +82,32 @@ public class MainActivity extends AppCompatActivity {
                 getSupportActionBar().setTitle(R.string.app_name);
                 invalidateOptionsMenu();
             }
+
+
         };
 
         drawerToggle.setDrawerIndicatorEnabled(true);
         drawerLayout.setDrawerListener(drawerToggle);
+        drawerLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "Menu", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+
+                if (menuItem.getItemId() == R.id.menu_apartaments)
+                {
+                    Intent intent = new Intent(getApplicationContext(), ApartamentsActivity.class);
+                    startActivity(intent);
+                    return true;
+                }
+                return false;
+            }
+        });
 
     }
 
@@ -101,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement

@@ -15,5 +15,6 @@
     <string name="editOperationAbout">About operation</string>
     <string name="descriptionChart">Information on your bills</string>
     <string name="balanceBill">Balance</string>
+    <string name="title_activity_apartaments">ApartamentsActivity</string>
 
 </resources>

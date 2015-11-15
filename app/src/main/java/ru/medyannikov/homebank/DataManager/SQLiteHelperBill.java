@@ -42,8 +42,50 @@ public class SQLiteHelperBill extends SQLiteOpenHelper {
     public static final String USER_SYNC = "user_sync";
     public static final String USER_ID_SERVER = "user_id_serv";
 
+    public static final String TABLE_APARTAMENTS = "apartaments";
+    public static final String APART_ID = "_id";
+    public static final String APART_NAME = "apart_name";
+    public static final String APART_VALUE = "apart_value";
+
+    public static final String TABLE_APART_DETAILS = "apart_details";
+    public static final String APART_DETAILS_ID = "_id";
+    public static final String APART_DETAILS_HOT = "details_hot";
+    public static final String APART_DETAILS_COLD = "details_cold";
+    public static final String APART_DETAILS_HEATING = "details_heating";
+    public static final String APART_DETAILS_L_D = "details_light_day";
+    public static final String APRAT_DETAILS_L_N = "details_light_night";
+    public static final String APART_DETAILS_CONTENT = "details_content";
+    public static final String APART_DETAILS_WATER = "details_water";
+    public static final String APART_DETAILS_INTERCOM = "details_intercom";
+    public static final String APART_DETAILS_YEAR = "details_year";
+    public static final String APART_DETAILS_MONTH = "details_month";
+    public static final String APART_DETAILS_OTHER = "details_other";
+    public static final String APART_DETAILS_REPAIR = "details_repair";
+
     public static final String DATABASE_NAME = "bill.db";
     public static final int DATABASE_VERSION = 22;
+
+    public static final String CREATE_APARTAMENTS =
+            "create table " + TABLE_APARTAMENTS
+            + " (" + APART_ID + " integer primary key autoincrement, "
+            + APART_NAME + " TEXT not null, "
+            + APART_VALUE + " REAL default 0.0);";
+
+    public static final String CREATE_APART_DETAILS =
+            "create table " + TABLE_APART_DETAILS
+            + " (" + APART_DETAILS_ID + " integer primary key autoincrement, "
+            + APART_DETAILS_HOT + " real default 0.0, "
+            + APART_DETAILS_COLD + " real default 0.0, "
+            + APART_DETAILS_HEATING + " real default 0.0, "
+            + APART_DETAILS_L_D + " real default 0.0, "
+            + APRAT_DETAILS_L_N + " real default 0.0, "
+            + APART_DETAILS_CONTENT + " real default 0.0, "
+            + APART_DETAILS_WATER + " real default 0.0, "
+            + APART_DETAILS_INTERCOM + " real default 0.0, "
+            + APART_DETAILS_YEAR + " integer default 2015, "
+            + APART_DETAILS_MONTH + " integer default 1, "
+            + APART_DETAILS_OTHER + " real default 0.0, "
+            + APART_DETAILS_REPAIR + " real default 0.0);";
 
     public static final String CREATE_BILL =
             "create table "+ TABLE_BILL
@@ -104,10 +146,14 @@ public class SQLiteHelperBill extends SQLiteOpenHelper {
         db.execSQL(CREATE_BILL);
         db.execSQL(CREATE_OPERATION);
         db.execSQL(CREATE_USERS);
+        db.execSQL(CREATE_APARTAMENTS);
+        db.execSQL(CREATE_APART_DETAILS);
     }
     public void onCreate(SQLiteDatabase db, int ver) {
         db.execSQL(CREATE_BILL);
         db.execSQL(CREATE_OPERATION);
+        db.execSQL(CREATE_APARTAMENTS);
+        db.execSQL(CREATE_APART_DETAILS);
         /*if (ver < DATABASE_VERSION)
             db.execSQL(CREATE_USERS);*/
         db.execSQL(CREATE_TRIGGER_INSERT_OPERATION);
@@ -117,8 +163,11 @@ public class SQLiteHelperBill extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (oldVersion < newVersion)
         {
-            db.execSQL("DROP TABLE IF EXISTS " + TABLE_BILL);
-            db.execSQL("DROP TABLE IF EXISTS " + TABLE_OPERATION);
+            //db.execSQL("DROP TABLE IF EXISTS " + TABLE_BILL);
+            //db.execSQL("DROP TABLE IF EXISTS " + TABLE_OPERATION);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_APART_DETAILS);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_APARTAMENTS);
+
             //db.execSQL("DROP TABLE IF EXISTS " + TABLE_BILL);
             db.execSQL("DROP TRIGGER IF EXISTS " + OPERATION_TRIGGER_INSERT );
             onCreate(db,oldVersion);
