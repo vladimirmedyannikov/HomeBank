@@ -7,8 +7,13 @@ import android.support.v7.widget.RecyclerView;
 
 import com.melnykov.fab.FloatingActionButton;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import ru.medyannikov.homebank.Adapter.RecycleAdapterApartaments;
 import ru.medyannikov.homebank.Adapter.RecycleAdapterBill;
 import ru.medyannikov.homebank.DataManager.SQLiteDataSource;
+import ru.medyannikov.homebank.Model.Apartament;
 import ru.medyannikov.homebank.R;
 
 public class ApartamentsActivity extends Activity {
@@ -27,7 +32,10 @@ public class ApartamentsActivity extends Activity {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
 
-        recyclerView.setAdapter(new RecycleAdapterBill(SQLiteDataSource.billList));
+        List<Apartament> apartaments = new ArrayList<Apartament>();
+        apartaments.add(new Apartament(1,"Apartament 1", 100d));
+        apartaments.add(new Apartament(2, "Apartament 2", 200d));
+        recyclerView.setAdapter(new RecycleAdapterApartaments(apartaments));
     }
 
 }

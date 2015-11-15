@@ -43,7 +43,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/operatAbout"
-                        android:text="About fro About fro About fro About fro About fro About fro About fro About fro About froAbout fro"
                         android:textSize="10sp"
                         android:lines="2"
                         android:singleLine="false"
