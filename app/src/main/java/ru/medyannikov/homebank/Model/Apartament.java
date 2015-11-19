@@ -7,6 +7,19 @@ public class Apartament {
     private int _id;
     private String name;
     private Double value;
+    private String about;
+
+    public void setId(int _id) {
+        this._id = _id;
+    }
+
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
+    }
 
     public Apartament() {
     }
@@ -17,7 +30,7 @@ public class Apartament {
         this.value = value;
     }
 
-    public int get_id() {
+    public int getId() {
         return _id;
     }
 

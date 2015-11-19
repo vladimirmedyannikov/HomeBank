@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import ru.medyannikov.homebank.Model.Apartament;
 import ru.medyannikov.homebank.Model.Bill;
 import ru.medyannikov.homebank.Model.Operation;
 
@@ -47,9 +48,17 @@ public class SQLiteDataSource {
             SQLiteHelperBill.OPERATION_VALUE
     };
 
+    private String[] allColimnsApartament = {
+            SQLiteHelperBill.APART_ID,
+            SQLiteHelperBill.APART_NAME,
+            SQLiteHelperBill.APART_ABOUT,
+            SQLiteHelperBill.APART_VALUE
+    };
+
     public final static List<Bill> billList = new ArrayList<Bill>();
     public final static List<Operation> operationList = new ArrayList<Operation>();
     public final static List<Operation> tempOperationList = new ArrayList<Operation>();
+    public static final List<Apartament> apartamentList = new ArrayList<Apartament>();
 
     public SQLiteDataSource(Context context)
     {
@@ -73,7 +82,7 @@ public class SQLiteDataSource {
         cv.put(SQLiteHelperBill.BILL_VALUE,value);
         cv.put(SQLiteHelperBill.BILL_DEPENDENCE, dependence);
         cv.put(SQLiteHelperBill.BILL_DATE,date);
-        cv.put(SQLiteHelperBill.BILL_SYNC,sync);
+        cv.put(SQLiteHelperBill.BILL_SYNC, sync);
         cv.put(SQLiteHelperBill.BILL_ID_SERVER, id_serv);
 
         long insertId = db.insert(SQLiteHelperBill.TABLE_BILL, null, cv);
@@ -223,11 +232,11 @@ public class SQLiteDataSource {
                 + SQLiteHelperBill.OPERATION_DATE + ","
                 + SQLiteHelperBill.OPERATION_SYNC + ","
                 + SQLiteHelperBill.OPERATION_TYPE + ","
-                + SQLiteHelperBill.OPERATION_VALUE  + ","
+                + SQLiteHelperBill.OPERATION_VALUE + ","
                 + SQLiteHelperBill.BILL_NAME + ","
                 + SQLiteHelperBill.OPERATION_PREV_VALUE
                 + " from " + SQLiteHelperBill.TABLE_OPERATION + " left join " + SQLiteHelperBill.TABLE_BILL
-                + " on " + SQLiteHelperBill.TABLE_BILL +"."+ SQLiteHelperBill.BILL_ID + " = " + SQLiteHelperBill.OPERATION_BILL
+                + " on " + SQLiteHelperBill.TABLE_BILL + "." + SQLiteHelperBill.BILL_ID + " = " + SQLiteHelperBill.OPERATION_BILL
                 + " where " + SQLiteHelperBill.TABLE_OPERATION + "." + SQLiteHelperBill.OPERATION_BILL + " = " + idBill, null);
 
         cursor.moveToFirst();
@@ -269,12 +278,46 @@ public class SQLiteDataSource {
         cv.put(SQLiteHelperBill.OPERATION_BILL, newOperation.getIdBill());
         cv.put(SQLiteHelperBill.OPERATION_DATE, newOperation.getDate());
         //cv.put(SQLiteHelperBill.OPERATION_ID, newOperation.getId());
-        cv.put(SQLiteHelperBill.OPERATION_ID_SERVER,newOperation.getIdServ());
-        cv.put(SQLiteHelperBill.OPERATION_SYNC,newOperation.getSync());
+        cv.put(SQLiteHelperBill.OPERATION_ID_SERVER, newOperation.getIdServ());
+        cv.put(SQLiteHelperBill.OPERATION_SYNC, newOperation.getSync());
         cv.put(SQLiteHelperBill.OPERATION_TYPE, newOperation.getType());
         cv.put(SQLiteHelperBill.OPERATION_VALUE, newOperation.getValue());
 
         Long idInsert = db.insert(SQLiteHelperBill.TABLE_OPERATION, null, cv);
         return idInsert;
+    }
+
+    public Long insertApartament(String name, String about) {
+        ContentValues cv = new ContentValues();
+        cv.put(SQLiteHelperBill.APART_NAME, name );
+        cv.put(SQLiteHelperBill.APART_ABOUT, about);
+
+        Long idInsert = db.insert(SQLiteHelperBill.TABLE_APARTAMENTS, null, cv);
+        return idInsert;
+    }
+
+    public List<Apartament> getApartaments(){
+        apartamentList.clear();
+
+        Cursor cursor = db.query(SQLiteHelperBill.TABLE_APARTAMENTS,allColimnsApartament,null,null,null,null, null);
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast())
+        {
+            apartamentList.add(cursorToApartement(cursor));
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        return apartamentList;
+    }
+
+    private Apartament cursorToApartement(Cursor cursor)
+    {
+        Apartament apartament = new Apartament();
+        apartament.setId(cursor.getInt(0));
+        apartament.setName(cursor.getString(1));
+        apartament.setAbout(cursor.getString(2));
+        apartament.setValue(cursor.getDouble(3));
+        return apartament;
     }
 }

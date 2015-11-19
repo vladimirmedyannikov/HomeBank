@@ -32,6 +32,9 @@
             android:name=".Activity.ApartamentsActivity"
             android:label="@string/title_activity_apartaments" >
         </activity>
+        <activity android:name=".IntentDialog.ApartamentIntent">
+
+        </activity>
     </application>
 
 </manifest>

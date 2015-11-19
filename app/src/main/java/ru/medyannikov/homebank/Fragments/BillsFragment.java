@@ -43,10 +43,10 @@ public class BillsFragment extends Fragment {
     private RecycleAdapterBill adapter;
     private FloatingActionButton fab;
     private SQLiteDataSource dataSource;
-
+    private static BillsFragment billsFragment;
     public static BillsFragment getInstance(){
         Bundle bundle = new Bundle();
-        BillsFragment billsFragment = new BillsFragment();
+        if (billsFragment == null) billsFragment = new BillsFragment();
         billsFragment.setArguments(bundle);
         return billsFragment;
     }
@@ -63,7 +63,7 @@ public class BillsFragment extends Fragment {
         if (!BusProvider.getInstance().isRegistered(this)) BusProvider.getInstance().register(this);
         View view = inflater.inflate(LAYOUT,container,false);
 
-        dataSource = new SQLiteDataSource(this.getContext());
+        dataSource = new SQLiteDataSource(getContext());
         dataSource.openConnection();
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recycleViewBills);
@@ -80,20 +80,25 @@ public class BillsFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        //recyclerView.setItemAnimator(new DefaultItemAnimator());
         //billList = new ArrayList<Bill>();
 
-        updateItems();
 
-        adapter = new RecycleAdapterBill(billList);
+
+        /*adapter = new RecycleAdapterBill(billList);
         recyclerView.setAdapter(adapter);
-        registerForContextMenu(recyclerView);
+        registerForContextMenu(recyclerView);*/
         return view;
     }
 
     private void fabAction() {
         Intent intent = new Intent(getContext(), BillIntent.class);
         startActivityForResult(intent,1);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        updateItems();
     }
 
     @Override

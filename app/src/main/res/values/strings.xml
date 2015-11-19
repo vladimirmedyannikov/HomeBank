@@ -16,5 +16,7 @@
     <string name="descriptionChart">Information on your bills</string>
     <string name="balanceBill">Balance</string>
     <string name="title_activity_apartaments">ApartamentsActivity</string>
+    <string name="editApartamentName">Name apartament</string>
+    <string name="editApartamentAbout">About apartament</string>
 
 </resources>

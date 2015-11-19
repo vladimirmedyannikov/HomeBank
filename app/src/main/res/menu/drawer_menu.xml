@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/menu_main" android:title="Main menu">Main</item>
-    <group android:menuCategory="container">
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/menu_main" android:title="Main menu">Main</item>
         <item android:id="@+id/menu_apartaments" android:title="Apartaments">Apartaments</item>
         <item android:id="@+id/menu2" android:title="Menu2">Menu1</item>
     </group>

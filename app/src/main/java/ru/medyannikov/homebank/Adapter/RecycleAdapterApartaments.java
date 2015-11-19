@@ -34,7 +34,7 @@ public class RecycleAdapterApartaments extends RecyclerView.Adapter<RecycleAdapt
     @Override
     public void onBindViewHolder(RecycleAdapterApartaments.ViewHolder holder, int position) {
         holder.apartamentName.setText(apartamentsList.get(position).getName().toString());
-        holder.apartamentAbout.setText("About");
+        holder.apartamentAbout.setText(apartamentsList.get(position).getAbout().toString());
         holder.apartamentValue.setText(apartamentsList.get(position).getValue().toString());
         holder.itemView.setId(position);
     }

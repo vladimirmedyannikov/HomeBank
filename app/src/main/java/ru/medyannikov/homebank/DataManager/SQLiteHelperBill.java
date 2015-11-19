@@ -45,6 +45,7 @@ public class SQLiteHelperBill extends SQLiteOpenHelper {
     public static final String TABLE_APARTAMENTS = "apartaments";
     public static final String APART_ID = "_id";
     public static final String APART_NAME = "apart_name";
+    public static final String APART_ABOUT = "apart_about";
     public static final String APART_VALUE = "apart_value";
 
     public static final String TABLE_APART_DETAILS = "apart_details";
@@ -63,12 +64,13 @@ public class SQLiteHelperBill extends SQLiteOpenHelper {
     public static final String APART_DETAILS_REPAIR = "details_repair";
 
     public static final String DATABASE_NAME = "bill.db";
-    public static final int DATABASE_VERSION = 22;
+    public static final int DATABASE_VERSION = 23;
 
     public static final String CREATE_APARTAMENTS =
             "create table " + TABLE_APARTAMENTS
             + " (" + APART_ID + " integer primary key autoincrement, "
             + APART_NAME + " TEXT not null, "
+            + APART_ABOUT + " TEXT, "
             + APART_VALUE + " REAL default 0.0);";
 
     public static final String CREATE_APART_DETAILS =
@@ -143,15 +145,15 @@ public class SQLiteHelperBill extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(CREATE_BILL);
-        db.execSQL(CREATE_OPERATION);
+        //db.execSQL(CREATE_BILL);
+        //db.execSQL(CREATE_OPERATION);
         db.execSQL(CREATE_USERS);
         db.execSQL(CREATE_APARTAMENTS);
         db.execSQL(CREATE_APART_DETAILS);
     }
     public void onCreate(SQLiteDatabase db, int ver) {
-        db.execSQL(CREATE_BILL);
-        db.execSQL(CREATE_OPERATION);
+        //db.execSQL(CREATE_BILL);
+        //db.execSQL(CREATE_OPERATION);
         db.execSQL(CREATE_APARTAMENTS);
         db.execSQL(CREATE_APART_DETAILS);
         /*if (ver < DATABASE_VERSION)
