@@ -10,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.melnykov.fab.FloatingActionButton;
 import com.squareup.otto.Subscribe;
@@ -96,7 +95,7 @@ public class OperationFragment extends Fragment {
         Intent intent = new Intent(getContext(), OperationIntent.class);
 
         if (bill != null) {
-            intent.putExtra(ClassUtils.INTENT_BILL_INFO, bill.get_id());
+            intent.putExtra(ClassUtils.INTENT_BILL_INFO, bill.getId());
             intent.putExtra(ClassUtils.INTENT_ADD_OPERATION,false);
         } else {
             intent.putExtra(ClassUtils.INTENT_ADD_OPERATION,true);
@@ -116,7 +115,7 @@ public class OperationFragment extends Fragment {
             recyclerView.setAdapter(adapterOperation);
         }
         else {
-            operationList = dataSource.getOperations(bill.get_id());
+            operationList = dataSource.getOperations(bill.getId());
             adapterOperation = new RecycleAdapterOperation(operationList);
             recyclerView.setAdapter(adapterOperation);
         }

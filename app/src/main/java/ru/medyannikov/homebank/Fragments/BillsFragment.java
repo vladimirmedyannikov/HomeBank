@@ -5,20 +5,16 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.melnykov.fab.FloatingActionButton;
 import com.squareup.otto.Subscribe;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import ru.medyannikov.homebank.Activity.ActivityBillInfo;
@@ -144,8 +140,7 @@ public class BillsFragment extends Fragment {
                 //Snackbar.make(this.getView(), "Add operation " + item.getGroupId() + " " + billList.get(item.getGroupId()).getName(), Snackbar.LENGTH_SHORT).show();
                 intent = new Intent(getContext(), OperationIntent.class);
                 intent.putExtra(ClassUtils.INTENT_ADD_OPERATION,false);
-                intent.putExtra(ClassUtils.INTENT_BILL_INFO, billList.get(item.getGroupId()).get_id());
-                //intent.setAction(String.valueOf(billList.get(item.getGroupId()).get_id()));
+                intent.putExtra(ClassUtils.INTENT_BILL_INFO, billList.get(item.getGroupId()).getId());
                 startActivityForResult(intent, item.getGroupId());
                 break;
             case 3:

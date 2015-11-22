@@ -1,23 +1,17 @@
 package ru.medyannikov.homebank.IntentDialog;
 
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
-import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import de.greenrobot.event.EventBus;
 import ru.medyannikov.homebank.DataManager.SQLiteDataSource;
@@ -112,7 +106,7 @@ public class OperationIntent extends AppCompatActivity {
                 if (spinner.getSelectedItemPosition() == 0){
                 newOperation.setValue(value);}else newOperation.setValue(value*(-1));
                 if (res){
-                    newOperation.setIdBill(((Bill) spinnerBill.getSelectedItem()).get_id());
+                    newOperation.setIdBill(((Bill) spinnerBill.getSelectedItem()).getId());
                 }
                 else newOperation.setIdBill(getIntent().getIntExtra(ClassUtils.INTENT_BILL_INFO,0));
                 /*SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());

@@ -8,10 +8,8 @@ import android.database.sqlite.SQLiteException;
 import android.graphics.Color;
 
 import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.DataSet;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -106,16 +104,6 @@ public class SQLiteDataSource {
         return billList;
     }
 
-    /*public List<Entry> getBillEntry(int id){
-        List<Entry> entries = new ArrayList<Entry>();
-        billList.get(id);
-        for (Bill b:billList) {
-            Entry entry = new Entry(b.getValue().floatValue(),b.get_id());
-            entries.add(entry);
-        }
-        return entries;
-    }*/
-
     public ArrayList<String> getBillXVlas(){
         ArrayList<String> list = new ArrayList<String>();
         for (Operation b:operationList) {
@@ -126,7 +114,7 @@ public class SQLiteDataSource {
 
     public ArrayList<String> getBillXVlas(Bill bill){
         ArrayList<String> list = new ArrayList<String>();
-        for (Operation b:getOperations(bill.get_id())) {
+        for (Operation b:getOperations(bill.getId())) {
             list.add(b.getDate().toString());
         }
         return list;
@@ -137,7 +125,7 @@ public class SQLiteDataSource {
         for (Bill b:billList) {
             ArrayList<Entry> listEntry = new ArrayList<Entry>();
             for (Operation op:operationList) {
-                if (b.get_id() == op.getIdBill()) {
+                if (b.getId() == op.getIdBill()) {
                     listEntry.add(new Entry(op.getPrev_value().floatValue(),operationList.indexOf(op)));
                 }
             }
@@ -162,7 +150,7 @@ public class SQLiteDataSource {
         List<LineDataSet> dataSetList = new ArrayList<LineDataSet>();
         ArrayList<Entry> listEntry = new ArrayList<Entry>();
 
-        List <Operation> list = getOperations(bill.get_id());
+        List <Operation> list = getOperations(bill.getId());
         for (Operation op:list) {
             listEntry.add(new Entry(op.getPrev_value().floatValue(), list.indexOf(op)));
         }

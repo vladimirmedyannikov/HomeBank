@@ -63,8 +63,39 @@ public class SQLiteHelperBill extends SQLiteOpenHelper {
     public static final String APART_DETAILS_OTHER = "details_other";
     public static final String APART_DETAILS_REPAIR = "details_repair";
 
+    public static final String TABLE_BILL_APART = "apart_bill";
+    public static final String BILL_APART_ID = "_id";
+    public static final String BILL_APART_APART = "apart_id";
+    public static final String BILL_APART_YEAR = "apart_year";
+    public static final String BILL_APART_MONTH = "apart_month";
+
+    public static final String TABLE_OPER_APARTAMENT = "apart_operation";
+    public static final String OPER_APART_ID = "_id";
+    public static final String OPER_APART_TYPE = "operat_type";
+    public static final String OPER_APART_BILL = "operat_bill";
+    public static final String OPER_APART_SUMM = "operat_summ";
+    public static final String OPER_APART_VALUE = "operat_value";
+    public static final String OPER_APART_TARIFF = "operat_tariff";
+
+
     public static final String DATABASE_NAME = "bill.db";
-    public static final int DATABASE_VERSION = 23;
+    public static final int DATABASE_VERSION = 24;
+
+    public static final String CREATE_BILL_APARTAMENT =
+            "create table " + TABLE_BILL_APART
+            + " (" + BILL_APART_ID + " integer primary key autoincrement, "
+            + BILL_APART_APART + " integer not null, "
+            + BILL_APART_MONTH + " integer not null, "
+            + BILL_APART_YEAR + " integer not null);";
+
+    public static final String CREATE_OPERAT_APART =
+            "create table " + TABLE_OPER_APARTAMENT
+            + OPER_APART_ID + " integer primary key autoincrement, "
+            + OPER_APART_TYPE + " integer not null, "
+            + OPER_APART_BILL + " integer not null, "
+            + OPER_APART_SUMM + " real default 0.0, "
+            + OPER_APART_VALUE + " real default 0.0, "
+            + OPER_APART_TARIFF + " real default 0.0);";
 
     public static final String CREATE_APARTAMENTS =
             "create table " + TABLE_APARTAMENTS
@@ -150,12 +181,16 @@ public class SQLiteHelperBill extends SQLiteOpenHelper {
         db.execSQL(CREATE_USERS);
         db.execSQL(CREATE_APARTAMENTS);
         db.execSQL(CREATE_APART_DETAILS);
+        db.execSQL(CREATE_BILL_APARTAMENT);
+        db.execSQL(CREATE_OPERAT_APART);
     }
     public void onCreate(SQLiteDatabase db, int ver) {
         //db.execSQL(CREATE_BILL);
         //db.execSQL(CREATE_OPERATION);
         db.execSQL(CREATE_APARTAMENTS);
         db.execSQL(CREATE_APART_DETAILS);
+        db.execSQL(CREATE_BILL_APARTAMENT);
+        db.execSQL(CREATE_OPERAT_APART);
         /*if (ver < DATABASE_VERSION)
             db.execSQL(CREATE_USERS);*/
         db.execSQL(CREATE_TRIGGER_INSERT_OPERATION);
@@ -169,9 +204,12 @@ public class SQLiteHelperBill extends SQLiteOpenHelper {
             //db.execSQL("DROP TABLE IF EXISTS " + TABLE_OPERATION);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_APART_DETAILS);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_APARTAMENTS);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_BILL_APART);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_OPER_APARTAMENT);
 
             //db.execSQL("DROP TABLE IF EXISTS " + TABLE_BILL);
             db.execSQL("DROP TRIGGER IF EXISTS " + OPERATION_TRIGGER_INSERT );
+
             onCreate(db,oldVersion);
         }
     }

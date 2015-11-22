@@ -33,7 +33,7 @@ public class ChartFragment extends Fragment {
     private LineChart lineChart;
     private SQLiteDataSource dataSource;
     private ArrayList<Entry> listData;
-    public static ChartFragment fragment;
+    public  ChartFragment fragment;
 
     private Bill bill = null;
 
@@ -103,10 +103,8 @@ public class ChartFragment extends Fragment {
 
     public static  ChartFragment getInstance(){
         Bundle bundle = new Bundle();
-        if (fragment == null) {
-            fragment = new ChartFragment();
-            fragment.setArguments(bundle);
-        }
+        ChartFragment fragment = new ChartFragment();
+        fragment.setArguments(bundle);
         return fragment;
     }
 
