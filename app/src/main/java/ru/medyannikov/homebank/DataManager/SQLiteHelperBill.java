@@ -65,6 +65,7 @@ public class SQLiteHelperBill extends SQLiteOpenHelper {
 
     public static final String TABLE_BILL_APART = "apart_bill";
     public static final String BILL_APART_ID = "_id";
+    public static final String BILL_APART_BILL = "apart_bill";
     public static final String BILL_APART_APART = "apart_id";
     public static final String BILL_APART_YEAR = "apart_year";
     public static final String BILL_APART_MONTH = "apart_month";
@@ -72,19 +73,31 @@ public class SQLiteHelperBill extends SQLiteOpenHelper {
     public static final String TABLE_OPER_APARTAMENT = "apart_operation";
     public static final String OPER_APART_ID = "_id";
     public static final String OPER_APART_TYPE = "operat_type";
-    public static final String OPER_APART_BILL = "operat_bill";
+    //public static final String OPER_APART_BILL = "operat_bill";
     public static final String OPER_APART_SUMM = "operat_summ";
     public static final String OPER_APART_VALUE = "operat_value";
     public static final String OPER_APART_TARIFF = "operat_tariff";
+
+    public static final String TABLE_APART_TYPE_OPERAT = "apart_type_operat";
+    public static final String TYPE_APART_ID = "_id";
+    public static final String TYPE_APART_NAME = "name";
+    public static final String TYPE_APART_CATEGORY = "category";
 
 
     public static final String DATABASE_NAME = "bill.db";
     public static final int DATABASE_VERSION = 24;
 
+    public static final String CREATE_APART_TYPE_OPERATION =
+            "create table " + TABLE_APART_TYPE_OPERAT
+            + " (" + TYPE_APART_ID + " integer primary key autoincrement, "
+            + TYPE_APART_NAME + " text, "
+            + TYPE_APART_CATEGORY + " integer default 0);";
+
     public static final String CREATE_BILL_APARTAMENT =
             "create table " + TABLE_BILL_APART
             + " (" + BILL_APART_ID + " integer primary key autoincrement, "
             + BILL_APART_APART + " integer not null, "
+            + BILL_APART_BILL + " integer, "
             + BILL_APART_MONTH + " integer not null, "
             + BILL_APART_YEAR + " integer not null);";
 
@@ -92,7 +105,7 @@ public class SQLiteHelperBill extends SQLiteOpenHelper {
             "create table " + TABLE_OPER_APARTAMENT
             + OPER_APART_ID + " integer primary key autoincrement, "
             + OPER_APART_TYPE + " integer not null, "
-            + OPER_APART_BILL + " integer not null, "
+           // + OPER_APART_BILL + " integer not null, "
             + OPER_APART_SUMM + " real default 0.0, "
             + OPER_APART_VALUE + " real default 0.0, "
             + OPER_APART_TARIFF + " real default 0.0);";
