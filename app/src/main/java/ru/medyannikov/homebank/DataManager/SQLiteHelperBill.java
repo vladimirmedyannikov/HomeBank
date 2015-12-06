@@ -65,7 +65,7 @@ public class SQLiteHelperBill extends SQLiteOpenHelper {
 
     public static final String TABLE_BILL_APART = "apart_bill";
     public static final String BILL_APART_ID = "_id";
-    public static final String BILL_APART_BILL = "apart_bill";
+    public static final String BILL_APART_BILL = "apart_bill_id";
     public static final String BILL_APART_APART = "apart_id";
     public static final String BILL_APART_YEAR = "apart_year";
     public static final String BILL_APART_MONTH = "apart_month";
@@ -82,7 +82,6 @@ public class SQLiteHelperBill extends SQLiteOpenHelper {
     public static final String TYPE_APART_ID = "_id";
     public static final String TYPE_APART_NAME = "name";
     public static final String TYPE_APART_CATEGORY = "category";
-
 
     public static final String DATABASE_NAME = "bill.db";
     public static final int DATABASE_VERSION = 24;
@@ -103,7 +102,7 @@ public class SQLiteHelperBill extends SQLiteOpenHelper {
 
     public static final String CREATE_OPERAT_APART =
             "create table " + TABLE_OPER_APARTAMENT
-            + OPER_APART_ID + " integer primary key autoincrement, "
+            + " (" +OPER_APART_ID + " integer primary key autoincrement, "
             + OPER_APART_TYPE + " integer not null, "
            // + OPER_APART_BILL + " integer not null, "
             + OPER_APART_SUMM + " real default 0.0, "

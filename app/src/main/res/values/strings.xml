@@ -14,9 +14,18 @@
     <string name="setOperation">Add operation</string>
     <string name="editOperationAbout">About operation</string>
     <string name="descriptionChart">Information on your bills</string>
-    <string name="balanceBill">Balance</string>
+    <string name="balanceBill">Balance:</string>
     <string name="title_activity_apartaments">ApartamentsActivity</string>
     <string name="editApartamentName">Name apartament</string>
     <string name="editApartamentAbout">About apartament</string>
+
+    <string name="menuApartBill">Apartament bill</string>
+    <string name="menuApartInfo">Apartament info</string>
+    <string name="aboutBill">About:</string>
+
+    <string-array name="arrayOperation">
+        <item>addition</item>
+        <item>substraction</item>
+    </string-array>
 
 </resources>

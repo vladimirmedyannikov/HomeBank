@@ -42,13 +42,13 @@ public class ActivityBillInfo extends AppCompatActivity {
 
         tabLayout = (TabLayout) findViewById(R.id.tabLayoutBill);
         viewPager = (ViewPager) findViewById(R.id.viewPagerBill);
-        toolbar = (Toolbar) findViewById(R.id.toolBarBill);
+        //toolbar = (Toolbar) findViewById(R.id.toolBarBill);
         aboutBill = (TextView) findViewById(R.id.aboutBill);
         valueBill = (TextView) findViewById(R.id.valueBill);
-        toolbar.setNavigationIcon(getResources().getDrawable(android.R.drawable.ic_menu_info_details));
+        //toolbar.setNavigationIcon(getResources().getDrawable(android.R.drawable.ic_menu_info_details));
 
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+        //setSupportActionBar(toolbar);
+        //getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         //getSupportActionBar().setHomeButtonEnabled(true);
         //getSupportActionBar().setDisplayShowHomeEnabled(true);
         updateItems();
@@ -62,7 +62,7 @@ public class ActivityBillInfo extends AppCompatActivity {
     private void updateItems() {
         Bundle bundle = getIntent().getExtras();
         bill = SQLiteDataSource.billList.get(bundle.getInt(ClassUtils.INTENT_BILL_INFO));
-        getSupportActionBar().setTitle(bill.getName());
+        //getSupportActionBar().setTitle(bill.getName());
         aboutBill.setText(bill.getAbout());
         valueBill.setText(bill.getValue().toString());
     }

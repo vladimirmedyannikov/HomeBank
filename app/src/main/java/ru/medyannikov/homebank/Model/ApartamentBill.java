@@ -10,6 +10,16 @@ public class ApartamentBill {
     private int idApartament;
     private int month;
     private int year;
+    private int ibBill;
+
+    public int getIbBill() {
+        return ibBill;
+    }
+
+    public void setIbBill(int ibBill) {
+        this.ibBill = ibBill;
+    }
+
     private List<ApartamentOperation> listOperation;
 
     public int getId() {

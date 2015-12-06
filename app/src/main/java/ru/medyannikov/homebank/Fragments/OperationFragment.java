@@ -98,7 +98,7 @@ public class OperationFragment extends Fragment {
             intent.putExtra(ClassUtils.INTENT_BILL_INFO, bill.getId());
             intent.putExtra(ClassUtils.INTENT_ADD_OPERATION,false);
         } else {
-            intent.putExtra(ClassUtils.INTENT_ADD_OPERATION,true);
+            intent.putExtra(ClassUtils.INTENT_ADD_OPERATION, true);
         }
         startActivityForResult(intent, 0);
     }

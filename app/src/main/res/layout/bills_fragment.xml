@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -12,6 +13,8 @@
         android:scrollbars="vertical"
         android:focusable="true"
         android:clickable="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:fitsSystemWindows="false"
         />
 
     <com.melnykov.fab.FloatingActionButton
@@ -22,6 +25,8 @@
         android:layout_margin="16dp"
         fab:fab_colorNormal="@color/primary"
         fab:fab_colorPressed="@color/primary_pressed"
-        fab:fab_colorRipple="@color/ripple" />
+        fab:fab_colorRipple="@color/ripple"
+        app:layout_anchor="@id/recycleViewBills"
+        android:fitsSystemWindows="false"/>
 
 </FrameLayout>

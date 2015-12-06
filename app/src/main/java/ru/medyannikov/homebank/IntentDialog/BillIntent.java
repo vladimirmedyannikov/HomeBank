@@ -10,6 +10,9 @@ import android.widget.EditText;
 import java.util.Date;
 
 import ru.medyannikov.homebank.DataManager.SQLiteDataSource;
+import ru.medyannikov.homebank.Eventbus.BillChangeEvent;
+import ru.medyannikov.homebank.Eventbus.BusProvider;
+import ru.medyannikov.homebank.Eventbus.OperationChangeEvent;
 import ru.medyannikov.homebank.Model.Bill;
 import ru.medyannikov.homebank.R;
 
@@ -19,6 +22,7 @@ public class BillIntent extends AppCompatActivity {
     private EditText editName;
     private EditText editAbout;
     private SQLiteDataSource dataSource;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +44,8 @@ public class BillIntent extends AppCompatActivity {
             dataSource = new SQLiteDataSource(BillIntent.this);
             dataSource.openConnection();
             dataSource.insertBill(editName.getText().toString(), editAbout.getText().toString(), 0.0, 0L, new Date().getTime(), 0, 0);
-            Snackbar.make(v,"Bill "+ editName.getText().toString() + " success added!",Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(v, "Bill " + editName.getText().toString() + " success added!", Snackbar.LENGTH_SHORT).show();
+            BusProvider.getInstance().post(new BillChangeEvent());
             finish();
         }
     }

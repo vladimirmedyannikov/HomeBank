@@ -20,6 +20,7 @@ import java.util.List;
 import ru.medyannikov.homebank.Activity.ActivityBillInfo;
 import ru.medyannikov.homebank.Adapter.RecycleAdapterBill;
 import ru.medyannikov.homebank.DataManager.SQLiteDataSource;
+import ru.medyannikov.homebank.Eventbus.BillChangeEvent;
 import ru.medyannikov.homebank.Eventbus.BusProvider;
 import ru.medyannikov.homebank.Eventbus.OperationChangeEvent;
 import ru.medyannikov.homebank.IntentDialog.BillIntent;
@@ -154,4 +155,5 @@ public class BillsFragment extends Fragment {
     public void onEvent(OperationChangeEvent event){
         updateItems();
     }
+    public void onEvent(BillChangeEvent event){ updateItems(); }
 }
