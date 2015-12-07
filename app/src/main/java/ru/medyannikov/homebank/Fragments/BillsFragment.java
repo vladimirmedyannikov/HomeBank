@@ -5,25 +5,22 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.melnykov.fab.FloatingActionButton;
 import com.squareup.otto.Subscribe;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import ru.medyannikov.homebank.Activity.ActivityBillInfo;
 import ru.medyannikov.homebank.Adapter.RecycleAdapterBill;
 import ru.medyannikov.homebank.DataManager.SQLiteDataSource;
+import ru.medyannikov.homebank.Eventbus.BillChangeEvent;
 import ru.medyannikov.homebank.Eventbus.BusProvider;
 import ru.medyannikov.homebank.Eventbus.OperationChangeEvent;
 import ru.medyannikov.homebank.IntentDialog.BillIntent;
@@ -43,10 +40,10 @@ public class BillsFragment extends Fragment {
     private RecycleAdapterBill adapter;
     private FloatingActionButton fab;
     private SQLiteDataSource dataSource;
-
+    private static BillsFragment billsFragment;
     public static BillsFragment getInstance(){
         Bundle bundle = new Bundle();
-        BillsFragment billsFragment = new BillsFragment();
+        if (billsFragment == null) billsFragment = new BillsFragment();
         billsFragment.setArguments(bundle);
         return billsFragment;
     }
@@ -63,7 +60,7 @@ public class BillsFragment extends Fragment {
         if (!BusProvider.getInstance().isRegistered(this)) BusProvider.getInstance().register(this);
         View view = inflater.inflate(LAYOUT,container,false);
 
-        dataSource = new SQLiteDataSource(this.getContext());
+        dataSource = new SQLiteDataSource(getContext());
         dataSource.openConnection();
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recycleViewBills);
@@ -80,20 +77,25 @@ public class BillsFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        //recyclerView.setItemAnimator(new DefaultItemAnimator());
         //billList = new ArrayList<Bill>();
 
-        updateItems();
 
-        adapter = new RecycleAdapterBill(billList);
+
+        /*adapter = new RecycleAdapterBill(billList);
         recyclerView.setAdapter(adapter);
-        registerForContextMenu(recyclerView);
+        registerForContextMenu(recyclerView);*/
         return view;
     }
 
     private void fabAction() {
         Intent intent = new Intent(getContext(), BillIntent.class);
         startActivityForResult(intent,1);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        updateItems();
     }
 
     @Override
@@ -139,8 +141,7 @@ public class BillsFragment extends Fragment {
                 //Snackbar.make(this.getView(), "Add operation " + item.getGroupId() + " " + billList.get(item.getGroupId()).getName(), Snackbar.LENGTH_SHORT).show();
                 intent = new Intent(getContext(), OperationIntent.class);
                 intent.putExtra(ClassUtils.INTENT_ADD_OPERATION,false);
-                intent.putExtra(ClassUtils.INTENT_BILL_INFO, billList.get(item.getGroupId()).get_id());
-                //intent.setAction(String.valueOf(billList.get(item.getGroupId()).get_id()));
+                intent.putExtra(ClassUtils.INTENT_BILL_INFO, billList.get(item.getGroupId()).getId());
                 startActivityForResult(intent, item.getGroupId());
                 break;
             case 3:
@@ -154,4 +155,5 @@ public class BillsFragment extends Fragment {
     public void onEvent(OperationChangeEvent event){
         updateItems();
     }
+    public void onEvent(BillChangeEvent event){ updateItems(); }
 }

@@ -33,6 +33,7 @@ public class ChartFragment extends Fragment {
     private LineChart lineChart;
     private SQLiteDataSource dataSource;
     private ArrayList<Entry> listData;
+    public  ChartFragment fragment;
 
     private Bill bill = null;
 
@@ -51,13 +52,19 @@ public class ChartFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_chart,container,false);
+        View view = inflater.inflate(R.layout.activity_chart, container, false);
         dataSource = new SQLiteDataSource(view.getContext());
         dataSource.openConnection();
 
         lineChart = (LineChart) view.findViewById(R.id.lineChart);
         lineChart.setDescription(view.getResources().getString(R.string.descriptionChart));
 
+
+
+        return view;
+    }
+
+    private void createChart() {
         YAxis leftAxis = lineChart.getAxisLeft();
 
         LimitLine ll = new LimitLine(100000f, "Good value");
@@ -71,8 +78,12 @@ public class ChartFragment extends Fragment {
         LineData data = updateChart();
 
         lineChart.setData(data);
+    }
 
-        return view;
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        createChart();
     }
 
     @NonNull
@@ -92,9 +103,7 @@ public class ChartFragment extends Fragment {
 
     public static  ChartFragment getInstance(){
         Bundle bundle = new Bundle();
-        /*if (fragment == null){*/
         ChartFragment fragment = new ChartFragment();
-       // }
         fragment.setArguments(bundle);
         return fragment;
     }

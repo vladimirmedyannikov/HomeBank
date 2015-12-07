@@ -5,6 +5,9 @@ import android.content.res.Configuration;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 
 
@@ -25,6 +28,7 @@ import ru.medyannikov.homebank.Activity.ApartamentsActivity;
 import ru.medyannikov.homebank.Adapter.TabPagerFragmentAdapter;
 import ru.medyannikov.homebank.Eventbus.BusProvider;
 import ru.medyannikov.homebank.Eventbus.OperationChangeEvent;
+import ru.medyannikov.homebank.Fragments.MainFragment;
 
 public class MainActivity extends AppCompatActivity {
     private CoordinatorLayout frameMain;
@@ -51,13 +55,13 @@ public class MainActivity extends AppCompatActivity {
         BusProvider.getInstance().register(this);
         frameMain = (CoordinatorLayout) findViewById(R.id.frameMain);
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-        viewPager = (ViewPager) findViewById(R.id.viewPager);
+        //viewPager = (ViewPager) findViewById(R.id.viewPager);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         navigationView = (NavigationView) findViewById(R.id.drawerMenu);
 
-        TabPagerFragmentAdapter pagerFragmentAdapter = new TabPagerFragmentAdapter(getSupportFragmentManager(),this);
+        /*TabPagerFragmentAdapter pagerFragmentAdapter = new TabPagerFragmentAdapter(getSupportFragmentManager(),this);
         viewPager.setAdapter(pagerFragmentAdapter);
-        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setupWithViewPager(viewPager);*/
 
         if (getSupportActionBar() == null)
         {
@@ -82,29 +86,55 @@ public class MainActivity extends AppCompatActivity {
                 getSupportActionBar().setTitle(R.string.app_name);
                 invalidateOptionsMenu();
             }
-
-
         };
 
         drawerToggle.setDrawerIndicatorEnabled(true);
         drawerLayout.setDrawerListener(drawerToggle);
-        drawerLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Menu", Toast.LENGTH_SHORT).show();
-            }
-        });
+
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
+                Fragment fragment = null;
+                try {
+                    switch (menuItem.getItemId())
+                    {
+                        case R.id.menu_main:
+                            fragment = (Fragment) MainFragment.getInstance();
+                            break;
+                        case R.id.menu_apartaments:
+                            fragment = (Fragment) ApartamentsActivity.class.newInstance();
+                            break;
+                        default: fragment = (Fragment) MainFragment.getInstance();
 
-                if (menuItem.getItemId() == R.id.menu_apartaments)
+                    }
+
+                } catch (InstantiationException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+
+                FragmentManager fragmentManager = getSupportFragmentManager();
+
+
+                fragmentManager.beginTransaction()
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .replace(R.id.flContent, fragment)
+                        .commit();
+
+
+                menuItem.setChecked(true);
+                getSupportActionBar().setTitle(menuItem.getTitle());
+                drawerLayout.closeDrawers();
+
+
+                /*if (menuItem.getItemId() == R.id.menu_apartaments)
                 {
                     Intent intent = new Intent(getApplicationContext(), ApartamentsActivity.class);
                     startActivity(intent);
                     return true;
-                }
+                }*/
                 return false;
             }
         });

@@ -28,9 +28,17 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+
+        <activity android:name=".Activity.ActivityApartamentInfo">
+            <meta-data
+                android:name="PARENT_ACTIVITY"
+                android:value=".MainActivity"/>
+        </activity>
         <activity
             android:name=".Activity.ApartamentsActivity"
             android:label="@string/title_activity_apartaments" >
+        </activity>
+        <activity android:name=".IntentDialog.ApartamentIntent">
         </activity>
     </application>
 

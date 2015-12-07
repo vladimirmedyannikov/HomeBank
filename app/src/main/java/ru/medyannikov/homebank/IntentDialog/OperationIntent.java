@@ -1,23 +1,18 @@
 package ru.medyannikov.homebank.IntentDialog;
 
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
-import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import de.greenrobot.event.EventBus;
 import ru.medyannikov.homebank.DataManager.SQLiteDataSource;
@@ -49,8 +44,6 @@ public class OperationIntent extends AppCompatActivity {
         dataSource = new SQLiteDataSource(this);
         dataSource.openConnection();
 
-
-
         BusProvider.getInstance().register(this);
 
         setContentView(R.layout.activity_operation_intent);
@@ -70,29 +63,16 @@ public class OperationIntent extends AppCompatActivity {
         if (res) {
             spinnerBill.setVisibility(View.VISIBLE);
             billList = dataSource.getBills();
-            List<String> str = new ArrayList<String>();
         }
-            /*for (Bill b:billList) {
-                str.add(b.getName());
-            }
-            String[] arrayStr = str.toArray(new String[str.size()]);*/
-            /*ArrayAdapter<String> adapterBill = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arrayStr);
-            adapterBill.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);*/
 
-            ArrayAdapter adapterBill = null;
-            if (idBill != 0){
-                adapterBill = new ArrayAdapter(this,android.R.layout.simple_spinner_dropdown_item,new Bill [] {dataSource.getBill(idBill)});
-            }
-            else {
-                adapterBill = new ArrayAdapter(this,android.R.layout.simple_spinner_item,billList);
-            }
-
-            spinnerBill.setAdapter(adapterBill);
-
-
-
-        //Toast.makeText(this,getIntent().getAction(),Toast.LENGTH_SHORT).show();
-
+        ArrayAdapter adapterBill = null;
+        if (idBill != 0 && res == false){
+            adapterBill = new ArrayAdapter(this,android.R.layout.simple_spinner_dropdown_item,new Bill [] {dataSource.getBill(idBill)});
+        }
+        else {
+            adapterBill = new ArrayAdapter(this,android.R.layout.simple_spinner_dropdown_item,billList);
+        }
+        spinnerBill.setAdapter(adapterBill);
         buttonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,23 +84,19 @@ public class OperationIntent extends AppCompatActivity {
         buttonOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 String about = editAbout.getText().toString();
                 Double value = Double.valueOf(editValue.getText().toString());
                 Operation newOperation = new Operation();
                 newOperation.setAbout(about);
-                if (spinner.getSelectedItemPosition() == 0){
-                newOperation.setValue(value);}else newOperation.setValue(value*(-1));
-                if (res){
-                    newOperation.setIdBill(((Bill) spinnerBill.getSelectedItem()).get_id());
-                }
-                else newOperation.setIdBill(getIntent().getIntExtra(ClassUtils.INTENT_BILL_INFO,0));
-                /*SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-                simpleDateFormat.format(simpleDateFormat);
-                newOperation.setDate(new Date().);*/
+                if (spinner.getSelectedItemPosition() == 0) {
+                    newOperation.setValue(value);
+                } else newOperation.setValue(value * (-1));
+                if (res) {
+                    newOperation.setIdBill(((Bill) spinnerBill.getSelectedItem()).getId());
+                } else
+                    newOperation.setIdBill(getIntent().getIntExtra(ClassUtils.INTENT_BILL_INFO, 0));
+
                 newOperation.setType(spinner.getSelectedItemPosition());
-
-
 
                 dataSource.insertOperation(newOperation);
                 dataSource.closeConnetion();
@@ -130,10 +106,7 @@ public class OperationIntent extends AppCompatActivity {
             }
         });
 
-
-        /*ArrayAdapter<CharSequence> adapter =  ArrayAdapter.createFromResource(this,R.array.operation,android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);*/
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,new String[]{"addition","substraction"});
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,getResources().getStringArray(R.array.arrayOperation));
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 

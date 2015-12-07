@@ -6,5 +6,6 @@ package ru.medyannikov.homebank.Utils;
 public class ClassUtils {
     public static final String INTENT_ADD_OPERATION = "Operation_add";
     public static final String INTENT_BILL_INFO = "Bill_info";
+    public static final String INTENT_APARTAMENT_INFO = "Apartament_info";
 
 }
