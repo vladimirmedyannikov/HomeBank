@@ -2,6 +2,7 @@ package ru.medyannikov.homebank.Fragments;
 
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,6 +19,7 @@ import java.util.List;
 
 import ru.medyannikov.homebank.Adapter.RecycleAdapterOperation;
 import ru.medyannikov.homebank.DataManager.SQLiteDataSource;
+import ru.medyannikov.homebank.DecorationRecycler.LineDivinerRecycler;
 import ru.medyannikov.homebank.Eventbus.BusProvider;
 import ru.medyannikov.homebank.Eventbus.OperationChangeEvent;
 import ru.medyannikov.homebank.IntentDialog.OperationIntent;
@@ -57,6 +59,8 @@ public class OperationFragment extends Fragment {
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recycleViewOperation);
         recyclerView.setLayoutManager(layoutManager);
+        Drawable draw = getContext().getResources().getDrawable(R.drawable.line_diviner);
+        recyclerView.addItemDecoration(new LineDivinerRecycler(draw));
 
         fab = (FloatingActionButton) view.findViewById(R.id.fabOperation);
         fab.attachToRecyclerView(recyclerView);

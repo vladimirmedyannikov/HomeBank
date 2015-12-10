@@ -26,6 +26,7 @@ import com.squareup.otto.Subscribe;
 import de.greenrobot.event.EventBus;
 import ru.medyannikov.homebank.Activity.ApartamentsActivity;
 import ru.medyannikov.homebank.Adapter.TabPagerFragmentAdapter;
+import ru.medyannikov.homebank.DataManager.SQLiteDataSource;
 import ru.medyannikov.homebank.Eventbus.BusProvider;
 import ru.medyannikov.homebank.Eventbus.OperationChangeEvent;
 import ru.medyannikov.homebank.Fragments.MainFragment;
@@ -97,15 +98,15 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(MenuItem menuItem) {
                 Fragment fragment = null;
                 try {
-                    switch (menuItem.getItemId())
-                    {
+                    switch (menuItem.getItemId()) {
                         case R.id.menu_main:
                             fragment = (Fragment) MainFragment.getInstance();
                             break;
                         case R.id.menu_apartaments:
                             fragment = (Fragment) ApartamentsActivity.class.newInstance();
                             break;
-                        default: fragment = (Fragment) MainFragment.getInstance();
+                        default:
+                            fragment = (Fragment) MainFragment.getInstance();
 
                     }
 
@@ -139,12 +140,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        getSupportFragmentManager().beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .replace(R.id.flContent, MainFragment.getInstance())
+                .commit();
+        navigationView.getMenu().getItem(0).setChecked(true);
     }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         drawerToggle.syncState();
+
+
     }
 
     @Override

@@ -1,6 +1,7 @@
 package ru.medyannikov.homebank.Activity;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.app.Activity;
 import android.support.annotation.Nullable;
@@ -19,6 +20,7 @@ import java.util.List;
 import ru.medyannikov.homebank.Adapter.RecycleAdapterApartaments;
 import ru.medyannikov.homebank.Adapter.RecycleAdapterBill;
 import ru.medyannikov.homebank.DataManager.SQLiteDataSource;
+import ru.medyannikov.homebank.DecorationRecycler.LineDivinerRecycler;
 import ru.medyannikov.homebank.Eventbus.ApartamentChangeEvent;
 import ru.medyannikov.homebank.Eventbus.BusProvider;
 import ru.medyannikov.homebank.IntentDialog.ApartamentIntent;
@@ -55,6 +57,8 @@ public class ApartamentsActivity extends Fragment {
         layoutManager = new LinearLayoutManager(view.getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
+        Drawable raw = getContext().getDrawable(R.drawable.line_diviner);
+        recyclerView.addItemDecoration(new LineDivinerRecycler(raw));
 
         updateApartaments();
 

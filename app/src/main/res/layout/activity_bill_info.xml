@@ -78,7 +78,10 @@
                 tabs:tabTextColor="@color/color_tabs"
                 tabs:tabSelectedTextColor="@android:color/white"
                 tabs:tabBackground="@color/accent_material_light"
-                android:background="@color/color_main">
+                android:background="@color/color_main"
+                android:layout_gravity="left"
+                app:tabMode="scrollable"
+                app:tabContentStart="96dp">
             </android.support.design.widget.TabLayout>
         </android.support.design.widget.AppBarLayout>
         <android.support.v4.view.ViewPager

@@ -29,6 +29,7 @@ public class ActivityApartamentInfo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         BusProvider.getInstance().register(this);
         setContentView(R.layout.activity_apartament_info);
+
         tabLayout = (TabLayout) findViewById(R.id.tabLayoutApartament);
         viewPager = (ViewPager) findViewById(R.id.viewPagerApartament);
         aboutText = (TextView) findViewById(R.id.aboutApartament);
@@ -53,6 +54,6 @@ public class ActivityApartamentInfo extends AppCompatActivity {
     }
 
     public void onEvent(ApartamentChangeEvent event){
-        
+
     }
 }

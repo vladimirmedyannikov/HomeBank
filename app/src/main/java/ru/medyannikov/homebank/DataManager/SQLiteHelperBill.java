@@ -84,7 +84,7 @@ public class SQLiteHelperBill extends SQLiteOpenHelper {
     public static final String TYPE_APART_CATEGORY = "category";
 
     public static final String DATABASE_NAME = "bill.db";
-    public static final int DATABASE_VERSION = 24;
+    public static final int DATABASE_VERSION = 25;
 
     public static final String CREATE_APART_TYPE_OPERATION =
             "create table " + TABLE_APART_TYPE_OPERAT
@@ -188,8 +188,8 @@ public class SQLiteHelperBill extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        //db.execSQL(CREATE_BILL);
-        //db.execSQL(CREATE_OPERATION);
+        db.execSQL(CREATE_BILL);
+        db.execSQL(CREATE_OPERATION);
         db.execSQL(CREATE_USERS);
         db.execSQL(CREATE_APARTAMENTS);
         db.execSQL(CREATE_APART_DETAILS);
@@ -197,8 +197,8 @@ public class SQLiteHelperBill extends SQLiteOpenHelper {
         db.execSQL(CREATE_OPERAT_APART);
     }
     public void onCreate(SQLiteDatabase db, int ver) {
-        //db.execSQL(CREATE_BILL);
-        //db.execSQL(CREATE_OPERATION);
+        db.execSQL(CREATE_BILL);
+        db.execSQL(CREATE_OPERATION);
         db.execSQL(CREATE_APARTAMENTS);
         db.execSQL(CREATE_APART_DETAILS);
         db.execSQL(CREATE_BILL_APARTAMENT);
@@ -212,8 +212,8 @@ public class SQLiteHelperBill extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (oldVersion < newVersion)
         {
-            //db.execSQL("DROP TABLE IF EXISTS " + TABLE_BILL);
-            //db.execSQL("DROP TABLE IF EXISTS " + TABLE_OPERATION);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_BILL);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_OPERATION);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_APART_DETAILS);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_APARTAMENTS);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_BILL_APART);

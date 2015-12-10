@@ -1,6 +1,8 @@
 package ru.medyannikov.homebank.Fragments;
 
 import android.content.Intent;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -20,6 +22,8 @@ import java.util.List;
 import ru.medyannikov.homebank.Activity.ActivityBillInfo;
 import ru.medyannikov.homebank.Adapter.RecycleAdapterBill;
 import ru.medyannikov.homebank.DataManager.SQLiteDataSource;
+import ru.medyannikov.homebank.DataManager.SQLiteHelperBill;
+import ru.medyannikov.homebank.DecorationRecycler.LineDivinerRecycler;
 import ru.medyannikov.homebank.Eventbus.BillChangeEvent;
 import ru.medyannikov.homebank.Eventbus.BusProvider;
 import ru.medyannikov.homebank.Eventbus.OperationChangeEvent;
@@ -54,14 +58,21 @@ public class BillsFragment extends Fragment {
         BusProvider.getInstance().unregister(this);
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        dataSource = new SQLiteDataSource(getContext().getApplicationContext());
+        dataSource.openConnection();
+
+        super.onCreate(savedInstanceState);
+
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (!BusProvider.getInstance().isRegistered(this)) BusProvider.getInstance().register(this);
         View view = inflater.inflate(LAYOUT,container,false);
 
-        dataSource = new SQLiteDataSource(getContext());
-        dataSource.openConnection();
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recycleViewBills);
         fab = (FloatingActionButton) view.findViewById(R.id.fab);
@@ -77,6 +88,8 @@ public class BillsFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
+        Drawable draw = getContext().getResources().getDrawable(R.drawable.line_diviner);
+        recyclerView.addItemDecoration(new LineDivinerRecycler(draw));
         //recyclerView.setItemAnimator(new DefaultItemAnimator());
         //billList = new ArrayList<Bill>();
 
