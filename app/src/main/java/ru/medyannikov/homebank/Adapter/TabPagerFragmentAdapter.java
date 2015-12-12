@@ -1,6 +1,7 @@
 package ru.medyannikov.homebank.Adapter;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -18,13 +19,15 @@ public class TabPagerFragmentAdapter extends FragmentPagerAdapter {
     private Context context;
     private FragmentManager fragmentManager;
     private Fragment actiFragment;
+    private Resources res;
 
     public TabPagerFragmentAdapter(FragmentManager fm, Context context) {
         super(fm);
         fragmentManager = fm;
         this.context = context;
-        //tabs = context.getResources().getStringArray(R.array.tabs);
-        tabs = new String[] {"Bills", "Operation","Diagram", "More info"};
+        res = context.getResources();
+        tabs = context.getResources().getStringArray(R.array.tabs);
+        //tabs = new String[] {"Bills", "Operation","Diagram", "More info"};
                 //this.context.getResources().getStringArray(R.array.tabs);
     }
 

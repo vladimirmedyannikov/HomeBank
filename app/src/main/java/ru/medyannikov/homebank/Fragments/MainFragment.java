@@ -49,15 +49,22 @@ public class MainFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        TabPagerFragmentAdapter pagerFragmentAdapter = new TabPagerFragmentAdapter(getChildFragmentManager(), this.getContext());
+        TabPagerFragmentAdapter pagerFragmentAdapter = new TabPagerFragmentAdapter(getChildFragmentManager(), getContext());
         viewPager.setAdapter(pagerFragmentAdapter);
         tabLayout.setupWithViewPager(viewPager);
+
     }
 
 

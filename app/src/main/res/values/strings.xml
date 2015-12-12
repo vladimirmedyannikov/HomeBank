@@ -28,4 +28,14 @@
         <item>substraction</item>
     </string-array>
 
+    <string name="mainMenuMain">Счета</string>
+    <string name="mainMenuApartaments">Квартиры</string>
+    <string name="mainMenuP">Пустышка</string>
+
+    <string-array name="tabs">
+        <item>Счета</item>
+        <item>Операции</item>
+        <item>Диаграмма</item>
+        <item>Прочее</item>
+    </string-array>
 </resources>

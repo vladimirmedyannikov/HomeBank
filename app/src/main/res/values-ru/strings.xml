@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">HomeBank</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Настройки</string>
+    <string name="sync">Синхронизация</string>
+    <string name="editBillName">Название счета</string>
+    <string name="editBillAbout">Описание</string>
+    <string name="butOk">ОК</string>
+    <string name="butCancel">Отмена</string>
+    <string name="billInfo">Информация о счете</string>
+    <string name="billdelete">Удалить счет</string>
+    <string name="editOperationValue">Сумма</string>
+    <string name="setOperation">Добавить операцию</string>
+    <string name="editOperationAbout">Информация о операции</string>
+    <string name="descriptionChart">Инфо о счетах</string>
+    <string name="balanceBill">Баланс:</string>
+    <string name="title_activity_apartaments">Ваши квартиры</string>
+    <string name="editApartamentName">Название квартиры</string>
+    <string name="editApartamentAbout">Описание квартиры</string>
+
+    <string name="menuApartBill">Счет квартиры</string>
+    <string name="menuApartInfo">Информация о квартире</string>
+    <string name="aboutBill">Описание:</string>
+
+    <string-array name="arrayOperation">
+        <item>Приход</item>
+        <item>Расход</item>
+    </string-array>
+
+    <string name="mainMenuMain">Счета</string>
+    <string name="mainMenuApartaments">Квартиры</string>
+    <string name="mainMenuP">Пустышка</string>
+
+    <string-array name="tabs">
+        <item>Счета</item>
+        <item>Операции</item>
+        <item>Диаграмма</item>
+        <item>Прочее</item>
+    </string-array>
+
+</resources>

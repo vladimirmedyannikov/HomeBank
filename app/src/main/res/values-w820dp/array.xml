@@ -27,12 +27,8 @@
         <item>http://38.media.tumblr.com/1b880127f4dbf2a51dadf7d6706916f5/tumblr_n98dov7QmR1rz3ewlo1_250.jpg</item>
         <item>http://nextranks.com/data_images/main/cats/cats-03.jpg</item>
     </array>
-    <array name="tabs">
-        <item>Bills</item>
-        <item>Add</item>
-        <item>Sub</item>
-        <item>More info</item>
-    </array>
+
+
     <string-array name="operation">
         <item>Add</item>
         <item>Sub</item>
