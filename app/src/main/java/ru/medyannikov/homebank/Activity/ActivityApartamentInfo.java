@@ -38,7 +38,7 @@ public class ActivityApartamentInfo extends AppCompatActivity {
         idApartament = bundle.getInt(ClassUtils.INTENT_APARTAMENT_INFO, 0);
         updateItems();
 
-        viewPager.setAdapter(new TabPagerAdapterApartamentInfo(getSupportFragmentManager()));
+        viewPager.setAdapter(new TabPagerAdapterApartamentInfo(getSupportFragmentManager(), getBaseContext()));
         tabLayout.setupWithViewPager(viewPager);
     }
 

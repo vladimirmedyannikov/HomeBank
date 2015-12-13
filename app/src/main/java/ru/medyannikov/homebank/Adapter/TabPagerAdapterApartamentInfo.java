@@ -5,6 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import ru.medyannikov.homebank.R;
+
 /**
  * Created by Vladimir on 03.12.2015.
  */
@@ -14,9 +16,11 @@ public class TabPagerAdapterApartamentInfo extends FragmentPagerAdapter
     private Fragment fragment = null;
     private String[] tabs;
 
-    public TabPagerAdapterApartamentInfo(FragmentManager fm) {
+    public TabPagerAdapterApartamentInfo(FragmentManager fm, Context context) {
         super(fm);
-        tabs = new String[] {"Bills", "Diagrams"};
+        this.context = context;
+        //tabs = new String[] {"Bills", "Diagrams"};
+        tabs = context.getResources().getStringArray(R.array.tabsApartaments);
     }
 
     @Override

@@ -33,9 +33,19 @@
     <string name="mainMenuP">Пустышка</string>
 
     <string-array name="tabs">
-        <item>Счета</item>
-        <item>Операции</item>
-        <item>Диаграмма</item>
-        <item>Прочее</item>
+        <item>Bills</item>
+        <item>Operation</item>
+        <item>Chart</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="tabsBills">
+        <item>Operation</item>
+        <item>Chart</item>
+    </string-array>
+
+    <string-array name="tabsApartaments">
+        <item>Bills</item>
+        <item>Chart</item>
     </string-array>
 </resources>

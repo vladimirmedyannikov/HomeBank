@@ -39,4 +39,13 @@
         <item>Прочее</item>
     </string-array>
 
+    <string-array name="tabsBills">
+        <item>Операции</item>
+        <item>Диаграмма</item>
+    </string-array>
+
+    <string-array name="tabsApartaments">
+        <item>Счета</item>
+        <item>Диаграмма</item>
+    </string-array>
 </resources>

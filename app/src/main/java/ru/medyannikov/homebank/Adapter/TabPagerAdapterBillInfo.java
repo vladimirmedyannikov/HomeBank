@@ -9,6 +9,7 @@ import ru.medyannikov.homebank.Fragments.BillsFragment;
 import ru.medyannikov.homebank.Fragments.ChartFragment;
 import ru.medyannikov.homebank.Fragments.OperationFragment;
 import ru.medyannikov.homebank.Model.Bill;
+import ru.medyannikov.homebank.R;
 
 /**
  * Created by Vladimir on 07.11.2015.
@@ -25,7 +26,8 @@ public class TabPagerAdapterBillInfo extends FragmentPagerAdapter {
         this.context = context;
         this.fragmentManager = fm;
         this.bill = bill;
-        tabs = new String [] {"Operation", "Chart"};
+        //tabs = new String [] {"Operation", "Chart"};
+        tabs = context.getResources().getStringArray(R.array.tabsBills);
     }
 
     @Override
