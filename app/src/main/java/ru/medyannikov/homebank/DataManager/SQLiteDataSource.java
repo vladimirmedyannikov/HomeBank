@@ -74,6 +74,7 @@ public class SQLiteDataSource {
 
     public Bill insertBill(String name, String about, Double value, Long dependence, Long date, Integer sync, Integer id_serv)
     {
+        openConnection();
         ContentValues cv = new ContentValues();
         cv.put(SQLiteHelperBill.BILL_NAME, name);
         cv.put(SQLiteHelperBill.BILL_ABOUT, about);
@@ -86,11 +87,13 @@ public class SQLiteDataSource {
         long insertId = db.insert(SQLiteHelperBill.TABLE_BILL, null, cv);
         /*getBills();*/
         Bill newItem = new Bill();
+        closeConnetion();
         return newItem;
     }
 
     public List<Bill> getBills()
     {
+        openConnection();
         billList.clear();
         Cursor cursor = db.query(SQLiteHelperBill.TABLE_BILL, allColumsBill, null, null, null, null, SQLiteHelperBill.BILL_ID + " DESC");
 
@@ -101,6 +104,7 @@ public class SQLiteDataSource {
             cursor.moveToNext();
         }
         cursor.close();
+        closeConnetion();
         return billList;
     }
 
@@ -121,6 +125,7 @@ public class SQLiteDataSource {
     }
 
     public List<LineDataSet> getBillsDataset(){
+        openConnection();
         List<LineDataSet> dataSetList = new ArrayList<LineDataSet>();
         for (Bill b:billList) {
             ArrayList<Entry> listEntry = new ArrayList<Entry>();
@@ -143,10 +148,12 @@ public class SQLiteDataSource {
 
             dataSetList.add(set);
         }
+        closeConnetion();
         return dataSetList;
     }
 
     public List<LineDataSet> getBillsDataset(Bill bill){
+        openConnection();
         List<LineDataSet> dataSetList = new ArrayList<LineDataSet>();
         ArrayList<Entry> listEntry = new ArrayList<Entry>();
 
@@ -167,11 +174,12 @@ public class SQLiteDataSource {
         set.setValueTextColor(Color.BLACK);
 
         dataSetList.add(set);
-
+        closeConnetion();
         return dataSetList;
     }
 
     public List<Operation> getOperations(){
+        openConnection();
         operationList.clear();
         Cursor cursor = db.rawQuery("Select "
                 + SQLiteHelperBill.TABLE_OPERATION + "." + SQLiteHelperBill.OPERATION_ID + ","
@@ -193,10 +201,12 @@ public class SQLiteDataSource {
             cursor.moveToNext();
         }
         cursor.close();
+        closeConnetion();
         return operationList;
     }
 
     public Bill getBill(int idBill){
+        openConnection();
         Bill bill = null;
         Cursor cursor = db.query(SQLiteHelperBill.TABLE_BILL, allColumsBill, SQLiteHelperBill.BILL_ID + " = " + idBill, null, null, null, SQLiteHelperBill.BILL_ID + " DESC");
 
@@ -207,10 +217,12 @@ public class SQLiteDataSource {
             cursor.moveToNext();
         }
         cursor.close();
+        closeConnetion();
         return bill;
     }
 
     public List<Operation> getOperations(int idBill){
+        openConnection();
         tempOperationList.clear();
         Cursor cursor = db.rawQuery("Select "
                 + SQLiteHelperBill.TABLE_OPERATION + "." + SQLiteHelperBill.OPERATION_ID + ","
@@ -233,6 +245,7 @@ public class SQLiteDataSource {
             cursor.moveToNext();
         }
         cursor.close();
+        closeConnetion();
         return tempOperationList;
     }
 
@@ -260,6 +273,7 @@ public class SQLiteDataSource {
     }
 
     public Long insertOperation(Operation newOperation) {
+        openConnection();
         ContentValues cv = new ContentValues();
 
         cv.put(SQLiteHelperBill.OPERATION_ABOUT, newOperation.getAbout());
@@ -272,19 +286,23 @@ public class SQLiteDataSource {
         cv.put(SQLiteHelperBill.OPERATION_VALUE, newOperation.getValue());
 
         Long idInsert = db.insert(SQLiteHelperBill.TABLE_OPERATION, null, cv);
+        closeConnetion();
         return idInsert;
     }
 
     public Long insertApartament(String name, String about) {
+        openConnection();
         ContentValues cv = new ContentValues();
         cv.put(SQLiteHelperBill.APART_NAME, name );
         cv.put(SQLiteHelperBill.APART_ABOUT, about);
 
         Long idInsert = db.insert(SQLiteHelperBill.TABLE_APARTAMENTS, null, cv);
+        closeConnetion();
         return idInsert;
     }
 
     public List<Apartament> getApartaments(){
+        openConnection();
         apartamentList.clear();
 
         Cursor cursor = db.query(SQLiteHelperBill.TABLE_APARTAMENTS,allColimnsApartament,null,null,null,null, null);
@@ -295,17 +313,20 @@ public class SQLiteDataSource {
             cursor.moveToNext();
         }
         cursor.close();
+        closeConnetion();
 
         return apartamentList;
     }
 
     private Apartament cursorToApartement(Cursor cursor)
     {
+        openConnection();
         Apartament apartament = new Apartament();
         apartament.setId(cursor.getInt(0));
         apartament.setName(cursor.getString(1));
         apartament.setAbout(cursor.getString(2));
         apartament.setValue(cursor.getDouble(3));
+        closeConnetion();
         return apartament;
     }
 }
