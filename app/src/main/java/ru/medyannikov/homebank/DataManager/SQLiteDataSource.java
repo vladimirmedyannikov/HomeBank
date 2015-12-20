@@ -252,6 +252,7 @@ public class SQLiteDataSource {
     private Bill cursorToBill(Cursor cursor) {
         Bill result = new Bill(cursor.getInt(0),cursor.getString(2), cursor.getDouble(5), cursor.getInt(6),
                 cursor.getLong(4), cursor.getString(3), cursor.getInt(7), cursor.getInt(1));
+        result.setListOperation(getOperations(result.getId()));
         return result;
     }
 

@@ -26,21 +26,39 @@ import ru.medyannikov.homebank.Utils.ClassUtils;
  */
 public class RecycleAdapterBill extends RecyclerView.Adapter<RecycleAdapterBill.ViewHolder> {
     private List<Bill> billList;
+    private final int HEADER = 0;
+    private final int CHILD = 1;
 
     @Override
     public RecycleAdapterBill.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycle_bill_item,parent,false);
-        ViewHolder vh = new ViewHolder(view);
-        vh.context = view.getContext();
+        ViewHolder vh = null;
+        if (viewType == HEADER) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycle_bill_item, parent, false);
+            vh = new ViewHolder(view);
+            vh.context = view.getContext();
+        }
+        else {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycle_bill_item, parent, false);
+            vh = new ViewHolder(view);
+            vh.context = view.getContext();
+        }
         return vh;
     }
 
     @Override
     public void onBindViewHolder(final RecycleAdapterBill.ViewHolder holder, int position) {
-        holder.name.setText(billList.get(position).getName().toString());
-        holder.value.setText(billList.get(position).getValue().toString());
-        holder.about.setText(billList.get(position).getAbout().toString());
-        holder.itemView.setId(position);
+        if (holder.getItemViewType() == HEADER) {
+            holder.name.setText(billList.get(position).getName().toString());
+            holder.value.setText(billList.get(position).getValue().toString());
+            holder.about.setText(billList.get(position).getAbout().toString());
+            holder.itemView.setId(position);
+        }
+        else {
+            holder.name.setText("1");
+            holder.value.setText("1");
+            holder.about.setText("1");
+            holder.itemView.setId(position);
+        }
     }
 
     @Override
@@ -97,5 +115,14 @@ public class RecycleAdapterBill extends RecyclerView.Adapter<RecycleAdapterBill.
 
     public RecycleAdapterBill(List<Bill> billList) {
         this.billList = billList;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if ((position % 2) == 1){
+            return HEADER;
+        }
+        else
+            return CHILD;
     }
 }

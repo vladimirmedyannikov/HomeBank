@@ -70,4 +70,5 @@
                             android:gravity="right"
                             android:textColor="@color/color_no_sync"/>
                     </LinearLayout>
+
             </LinearLayout>

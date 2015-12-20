@@ -1,5 +1,7 @@
 package ru.medyannikov.homebank.Model;
 
+import java.util.List;
+
 /**
  * Created by Vladimir on 26.09.2015.
  */
@@ -12,6 +14,15 @@ public class Bill {
     private Long date;
     private Integer sync;
     private int idServ;
+    private List<Operation> listOperation;
+
+    public List<Operation> getListOperation() {
+        return listOperation;
+    }
+
+    public void setListOperation(List<Operation> listOperation) {
+        this.listOperation = listOperation;
+    }
 
     public int getIdServ() {
         return idServ;
