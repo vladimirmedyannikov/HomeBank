@@ -61,7 +61,7 @@ public class RecycleAdapterOperation extends RecyclerView.Adapter<RecycleAdapter
         else return 0;
     }
 
-    public  class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         private Context context;
         private TextView operationBillName;
         private TextView operationAbout;

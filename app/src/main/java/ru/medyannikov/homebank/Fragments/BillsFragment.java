@@ -126,7 +126,7 @@ public class BillsFragment extends Fragment {
         }
         else{*/
             billList = dataSource.getBills();
-            adapter = new RecycleAdapterBill(billList);
+            adapter = new RecycleAdapterBill(dataSource.getExplandedBills());
             recyclerView.setAdapter(adapter);
        // }
     }

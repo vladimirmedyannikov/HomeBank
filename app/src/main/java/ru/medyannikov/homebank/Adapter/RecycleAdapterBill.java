@@ -25,7 +25,7 @@ import ru.medyannikov.homebank.Utils.ClassUtils;
  * Created by Vladimir on 26.09.2015.
  */
 public class RecycleAdapterBill extends RecyclerView.Adapter<RecycleAdapterBill.ViewHolder> {
-    private List<Bill> billList;
+    private List<Object> billList;
     private final int HEADER = 0;
     private final int CHILD = 1;
 
@@ -38,8 +38,8 @@ public class RecycleAdapterBill extends RecyclerView.Adapter<RecycleAdapterBill.
             vh.context = view.getContext();
         }
         else {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycle_bill_item, parent, false);
-            vh = new ViewHolder(view);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycle_operation_item, parent, false);
+            vh = new ChildViewHolder(view);
             vh.context = view.getContext();
         }
         return vh;
@@ -48,19 +48,34 @@ public class RecycleAdapterBill extends RecyclerView.Adapter<RecycleAdapterBill.
     @Override
     public void onBindViewHolder(final RecycleAdapterBill.ViewHolder holder, int position) {
         if (holder.getItemViewType() == HEADER) {
-            holder.name.setText(billList.get(position).getName().toString());
-            holder.value.setText(billList.get(position).getValue().toString());
-            holder.about.setText(billList.get(position).getAbout().toString());
+            holder.name.setText(((Bill) billList.get(position)).getName().toString());
+            holder.value.setText(((Bill)billList.get(position)).getValue().toString());
+            holder.about.setText(((Bill) billList.get(position)).getAbout().toString());
             holder.itemView.setId(position);
         }
         else {
-            holder.name.setText("1");
-            holder.value.setText("1");
-            holder.about.setText("1");
-            holder.itemView.setId(position);
+            onBindViewHolder();
         }
     }
 
+
+    /*
+    holder.operationBillName.setText(operationList.get(position).getNameBill());
+            holder.operationAbout.setText(operationList.get(position).getAbout());
+            holder.operationValue.setText(operationList.get(position).getValue().toString());
+            if(operationList.get(position).getType() == 1){
+                holder.operationValue.setTextColor(holder.context.getResources().getColor(R.color.operationSub));
+            } else{
+                holder.operationValue.setTextColor(holder.context.getResources().getColor(R.color.black));
+            }
+            if (operationList.get(position).getSync() == 0){
+                holder.operationSync.setTextColor(holder.context.getResources().getColor(R.color.color_no_sync));
+            } else{
+                holder.operationSync.setTextColor(holder.context.getResources().getColor(R.color.color_sync));
+            }
+            holder.operationAbout.setText(operationList.get(position).getDate());
+
+     */
     @Override
     public int getItemCount() {
         if (billList != null){
@@ -113,16 +128,33 @@ public class RecycleAdapterBill extends RecyclerView.Adapter<RecycleAdapterBill.
         }
     }
 
-    public RecycleAdapterBill(List<Bill> billList) {
+    public RecycleAdapterBill(List<Object> billList) {
         this.billList = billList;
     }
 
+    //public RecycleAdapterBill(List<Object> listObject)
+
     @Override
     public int getItemViewType(int position) {
-        if ((position % 2) == 1){
+        if (billList.get(position) instanceof Bill){
             return HEADER;
         }
         else
             return CHILD;
+    }
+
+    private class ChildViewHolder extends RecycleAdapterOperation.ViewHolder {
+        private Context context;
+        private TextView operationBillName;
+        private TextView operationAbout;
+        private TextView operationValue;
+        private TextView operationSync;
+        public ChildViewHolder(View view) {
+            super(view);
+            operationBillName = (TextView) itemView.findViewById(R.id.operatBillName);
+            operationAbout = (TextView) itemView.findViewById(R.id.operatAbout);
+            operationValue = (TextView) itemView.findViewById(R.id.operatValue);
+            operationSync = (TextView) itemView.findViewById(R.id.operatSync);
+        }
     }
 }

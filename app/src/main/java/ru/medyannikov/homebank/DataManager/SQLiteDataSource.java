@@ -13,6 +13,7 @@ import com.github.mikephil.charting.data.LineDataSet;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 import ru.medyannikov.homebank.Model.Apartament;
@@ -106,6 +107,21 @@ public class SQLiteDataSource {
         cursor.close();
         closeConnetion();
         return billList;
+    }
+
+    public List<Object> getExplandedBills()
+    {
+        List<Object> explandedBills = new ArrayList<Object>();
+        for (Bill b:billList) {
+            explandedBills.add(b);
+            for (Operation op:b.getListOperation())
+            {
+                explandedBills.add(op);
+            }
+        }
+
+        return explandedBills;
+
     }
 
     public ArrayList<String> getBillXVlas(){
