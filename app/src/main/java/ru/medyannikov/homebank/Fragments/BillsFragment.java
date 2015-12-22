@@ -20,6 +20,7 @@ import com.squareup.otto.Subscribe;
 import java.util.List;
 
 import ru.medyannikov.homebank.Activity.ActivityBillInfo;
+import ru.medyannikov.homebank.Adapter.AdapterExpandableBill;
 import ru.medyannikov.homebank.Adapter.RecycleAdapterBill;
 import ru.medyannikov.homebank.DataManager.SQLiteDataSource;
 import ru.medyannikov.homebank.DataManager.SQLiteHelperBill;
@@ -126,8 +127,11 @@ public class BillsFragment extends Fragment {
         }
         else{*/
             billList = dataSource.getBills();
-            adapter = new RecycleAdapterBill(dataSource.getExplandedBills());
-            recyclerView.setAdapter(adapter);
+            //adapter = new RecycleAdapterBill(dataSource.getExplandedBills());
+            //recyclerView.setAdapter(adapter);
+        AdapterExpandableBill adapterExpandableBill = new AdapterExpandableBill(dataSource.getExplandedBills());
+        recyclerView.setAdapter(adapterExpandableBill);
+
        // }
     }
 

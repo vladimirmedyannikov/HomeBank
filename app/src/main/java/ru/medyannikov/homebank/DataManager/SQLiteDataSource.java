@@ -265,10 +265,38 @@ public class SQLiteDataSource {
         return tempOperationList;
     }
 
+    public List<Operation> getOperations2(int idBill){
+        openConnection();
+        List<Operation> list = new ArrayList<Operation>();
+        Cursor cursor = db.rawQuery("Select "
+                + SQLiteHelperBill.TABLE_OPERATION + "." + SQLiteHelperBill.OPERATION_ID + ","
+                + SQLiteHelperBill.OPERATION_ID_SERVER + ","
+                + SQLiteHelperBill.OPERATION_ABOUT + ","
+                + SQLiteHelperBill.OPERATION_BILL + ","
+                + SQLiteHelperBill.OPERATION_DATE + ","
+                + SQLiteHelperBill.OPERATION_SYNC + ","
+                + SQLiteHelperBill.OPERATION_TYPE + ","
+                + SQLiteHelperBill.OPERATION_VALUE + ","
+                + SQLiteHelperBill.BILL_NAME + ","
+                + SQLiteHelperBill.OPERATION_PREV_VALUE
+                + " from " + SQLiteHelperBill.TABLE_OPERATION + " left join " + SQLiteHelperBill.TABLE_BILL
+                + " on " + SQLiteHelperBill.TABLE_BILL + "." + SQLiteHelperBill.BILL_ID + " = " + SQLiteHelperBill.OPERATION_BILL
+                + " where " + SQLiteHelperBill.TABLE_OPERATION + "." + SQLiteHelperBill.OPERATION_BILL + " = " + idBill, null);
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            list.add(cursorToOperation(cursor));
+            cursor.moveToNext();
+        }
+        cursor.close();
+        closeConnetion();
+        return list;
+    }
+
     private Bill cursorToBill(Cursor cursor) {
         Bill result = new Bill(cursor.getInt(0),cursor.getString(2), cursor.getDouble(5), cursor.getInt(6),
                 cursor.getLong(4), cursor.getString(3), cursor.getInt(7), cursor.getInt(1));
-        result.setListOperation(getOperations(result.getId()));
+        result.setListOperation(getOperations2(result.getId()));
         return result;
     }
 

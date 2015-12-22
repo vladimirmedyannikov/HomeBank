@@ -39,7 +39,7 @@ public class RecycleAdapterBill extends RecyclerView.Adapter<RecycleAdapterBill.
         }
         else {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycle_operation_item, parent, false);
-            vh = new ChildViewHolder(view);
+            //vh = new ChildViewHolder(view);
             vh.context = view.getContext();
         }
         return vh;
@@ -54,7 +54,7 @@ public class RecycleAdapterBill extends RecyclerView.Adapter<RecycleAdapterBill.
             holder.itemView.setId(position);
         }
         else {
-            onBindViewHolder();
+            //onBindViewHolder();
         }
     }
 

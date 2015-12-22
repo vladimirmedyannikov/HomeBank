@@ -7,6 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.List;
+
+import ru.medyannikov.homebank.Model.Bill;
+import ru.medyannikov.homebank.Model.Operation;
 import ru.medyannikov.homebank.R;
 
 /**
@@ -15,12 +19,10 @@ import ru.medyannikov.homebank.R;
 public class AdapterExpandableBill extends RecycleAdapterExpandableBill<AdapterExpandableBill.ParentViewHolder, AdapterExpandableBill.ChildViewHolder> {
 
 
-
-
-    @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
+    public AdapterExpandableBill(List<Object> objectList) {
+        super(objectList);
     }
+
 
     @Override
     public ParentViewHolder onCreateParentViewHolder(ViewGroup parentViewGroup) {
@@ -36,12 +38,18 @@ public class AdapterExpandableBill extends RecycleAdapterExpandableBill<AdapterE
 
     @Override
     public void onBindParentViewHolder(ParentViewHolder parentViewHolder, int position, Object parentListItem) {
-
+        parentViewHolder.name.setText(((Bill) parentListItem).getName().toString());
+        parentViewHolder.value.setText(((Bill) parentListItem).getValue().toString());
+        parentViewHolder.about.setText(((Bill) parentListItem).getAbout().toString());
+        parentViewHolder.itemView.setId(position);
     }
 
     @Override
     public void onBindChildViewHolder(ChildViewHolder childViewHolder, int position, Object childListItem) {
-
+        childViewHolder.operationBillName.setText(((Operation) childListItem).getNameBill());
+        childViewHolder.operationValue.setText(((Operation) childListItem).getValue().toString());
+        childViewHolder.operationAbout.setText(((Operation) childListItem).getAbout());
+        childViewHolder.operationSync.setText(((Operation) childListItem).getSync().toString());
     }
 
     public class ChildViewHolder extends RecyclerView.ViewHolder {

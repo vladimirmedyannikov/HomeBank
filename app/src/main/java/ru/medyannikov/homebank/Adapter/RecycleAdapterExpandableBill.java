@@ -19,6 +19,9 @@ public abstract class RecycleAdapterExpandableBill<PVH extends AdapterExpandable
 
     public abstract CVH onCreateChildViewHolder(ViewGroup childViewGroup);
 
+    public RecycleAdapterExpandableBill(List<Object> objectList) {
+        this.objectList = objectList;
+    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
@@ -48,5 +51,18 @@ public abstract class RecycleAdapterExpandableBill<PVH extends AdapterExpandable
         }
         else
             return CHILD;
+    }
+
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        Object listItem = objectList.get(position);
+        if (listItem instanceof Bill) {
+            PVH parentViewHolder = (PVH) holder;
+            onBindParentViewHolder(parentViewHolder, position, listItem);
+        } else if (listItem == null) {
+            throw new IllegalStateException("Incorrect ViewHolder found");
+        } else {
+            onBindChildViewHolder((CVH) holder, position, listItem);
+        }
     }
 }
