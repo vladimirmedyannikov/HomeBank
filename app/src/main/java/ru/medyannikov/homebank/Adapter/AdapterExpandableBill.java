@@ -1,7 +1,9 @@
 package ru.medyannikov.homebank.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,9 +11,11 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import ru.medyannikov.homebank.Activity.ActivityBillInfo;
 import ru.medyannikov.homebank.Model.Bill;
 import ru.medyannikov.homebank.Model.Operation;
 import ru.medyannikov.homebank.R;
+import ru.medyannikov.homebank.Utils.ClassUtils;
 
 /**
  * Created by Vladimir on 21.12.2015.
@@ -46,9 +50,9 @@ public class AdapterExpandableBill extends RecycleAdapterExpandableBill<AdapterE
 
     @Override
     public void onBindChildViewHolder(ChildViewHolder childViewHolder, int position, Object childListItem) {
-        childViewHolder.operationBillName.setText(((Operation) childListItem).getNameBill());
+        childViewHolder.operationBillName.setText(((Operation) childListItem).getAbout());
         childViewHolder.operationValue.setText(((Operation) childListItem).getValue().toString());
-        childViewHolder.operationAbout.setText(((Operation) childListItem).getAbout());
+        childViewHolder.operationAbout.setText(((Operation) childListItem).getDate());
         childViewHolder.operationSync.setText(((Operation) childListItem).getSync().toString());
     }
 
@@ -68,7 +72,7 @@ public class AdapterExpandableBill extends RecycleAdapterExpandableBill<AdapterE
         }
     }
 
-    public class ParentViewHolder extends RecyclerView.ViewHolder {
+    public class ParentViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener, View.OnCreateContextMenuListener {
         private TextView name;
         private TextView value;
         private TextView about;
@@ -78,9 +82,37 @@ public class AdapterExpandableBill extends RecycleAdapterExpandableBill<AdapterE
             name = (TextView) itemView.findViewById(R.id.billName);
             value = (TextView) itemView.findViewById(R.id.billValue);
             about = (TextView) itemView.findViewById(R.id.billAbout);
-            /*itemView.setOnClickListener(this);
+            itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
-            itemView.setOnCreateContextMenuListener(this);*/
+            itemView.setOnCreateContextMenuListener(this);
+        }
+        @Override
+        public void onClick(View v) {
+            //Toast.makeText(v.getContext(), name.getText(), Toast.LENGTH_SHORT).show();
+            /*Snackbar.make(v,name.getText(),Snackbar.LENGTH_SHORT)
+                    .setAction("Wow", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                        }
+                    }).show();*/
+            Intent intent = new Intent(v.getContext(), ActivityBillInfo.class);
+            intent.putExtra(ClassUtils.INTENT_BILL_INFO,v.getId());
+            v.getContext().startActivity(intent);
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            v.showContextMenu();
+            return true;
+        }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+            menu.setHeaderTitle("Context menu");
+            menu.add(v.getId(), 1, ContextMenu.NONE, R.string.billInfo);
+            menu.add(v.getId(), 2, ContextMenu.NONE, R.string.setOperation);
+            menu.add(v.getId(), 3, ContextMenu.NONE, R.string.billdelete);
         }
     }
 }

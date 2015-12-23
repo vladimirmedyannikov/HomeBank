@@ -57,6 +57,7 @@ public class SQLiteDataSource {
     public final static List<Bill> billList = new ArrayList<Bill>();
     public final static List<Operation> operationList = new ArrayList<Operation>();
     public final static List<Operation> tempOperationList = new ArrayList<Operation>();
+    public static final List<Object> explandedBills = new ArrayList<Object>();
     public static final List<Apartament> apartamentList = new ArrayList<Apartament>();
 
     public SQLiteDataSource(Context context)
@@ -111,7 +112,7 @@ public class SQLiteDataSource {
 
     public List<Object> getExplandedBills()
     {
-        List<Object> explandedBills = new ArrayList<Object>();
+        explandedBills.clear();
         for (Bill b:billList) {
             explandedBills.add(b);
             for (Operation op:b.getListOperation())
