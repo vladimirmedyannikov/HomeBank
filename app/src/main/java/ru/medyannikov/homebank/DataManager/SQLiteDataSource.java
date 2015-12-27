@@ -110,19 +110,24 @@ public class SQLiteDataSource {
         return billList;
     }
 
+    public static List<Object> getExplandedBillArray()
+    {
+        return explandedBills;
+    }
+
     public List<Object> getExplandedBills()
     {
         explandedBills.clear();
         for (Bill b:billList) {
             explandedBills.add(b);
-            for (Operation op:b.getListOperation())
-            {
-                explandedBills.add(op);
+            if (b.isExplanded()){
+                for (Operation op:b.getListOperation())
+                {
+                    explandedBills.add(op);
+                }
             }
         }
-
         return explandedBills;
-
     }
 
     public ArrayList<String> getBillXVlas(){

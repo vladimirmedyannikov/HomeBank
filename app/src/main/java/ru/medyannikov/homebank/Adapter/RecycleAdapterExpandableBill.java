@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import ru.medyannikov.homebank.Model.Bill;
+import ru.medyannikov.homebank.Model.Operation;
 
 /**
  * Created by Vladimir on 21.12.2015.
@@ -63,6 +64,33 @@ public abstract class RecycleAdapterExpandableBill<PVH extends AdapterExpandable
             throw new IllegalStateException("Incorrect ViewHolder found");
         } else {
             onBindChildViewHolder((CVH) holder, position, listItem);
+        }
+    }
+
+    public void collapseViews(int parentPosition){
+        Object listItem = objectList.get(parentPosition);
+        if (listItem instanceof Bill)
+        {
+            List<?> collapseList = ((Bill) listItem).getListOperation();
+            for (Object operation:collapseList){
+                objectList.remove(operation);
+                notifyDataSetChanged();
+            }
+            ((Bill) listItem).setExplanded(false);
+        }
+    }
+
+    public void explandedViews(int parentPosition){
+        Object listItem = objectList.get(parentPosition);
+        if (listItem instanceof Bill)
+        {
+
+            List<?> collapseList = ((Bill) listItem).getListOperation();
+            for (Object operation:collapseList){
+                objectList.add(parentPosition + 1, operation);
+                notifyDataSetChanged();
+            }
+            ((Bill) listItem).setExplanded(true);
         }
     }
 }

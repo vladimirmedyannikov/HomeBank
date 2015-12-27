@@ -45,7 +45,9 @@ public class AdapterExpandableBill extends RecycleAdapterExpandableBill<AdapterE
         parentViewHolder.name.setText(((Bill) parentListItem).getName().toString());
         parentViewHolder.value.setText(((Bill) parentListItem).getValue().toString());
         parentViewHolder.about.setText(((Bill) parentListItem).getAbout().toString());
-        parentViewHolder.itemView.setId(position);
+        //parentViewHolder.itemView.setId(((Bill) parentListItem).getId());
+        parentViewHolder.setExplanded(((Bill) parentListItem).isExplanded());
+        parentViewHolder.itemView.setId(((Bill) parentListItem).getId());
     }
 
     @Override
@@ -77,6 +79,7 @@ public class AdapterExpandableBill extends RecycleAdapterExpandableBill<AdapterE
         private TextView value;
         private TextView about;
         private Context context;
+        private boolean explanded;
         public ParentViewHolder(View itemView) {
             super(itemView);
             name = (TextView) itemView.findViewById(R.id.billName);
@@ -86,19 +89,26 @@ public class AdapterExpandableBill extends RecycleAdapterExpandableBill<AdapterE
             itemView.setOnLongClickListener(this);
             itemView.setOnCreateContextMenuListener(this);
         }
-        @Override
-        public void onClick(View v) {
-            //Toast.makeText(v.getContext(), name.getText(), Toast.LENGTH_SHORT).show();
-            /*Snackbar.make(v,name.getText(),Snackbar.LENGTH_SHORT)
-                    .setAction("Wow", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
 
-                        }
-                    }).show();*/
-            Intent intent = new Intent(v.getContext(), ActivityBillInfo.class);
-            intent.putExtra(ClassUtils.INTENT_BILL_INFO,v.getId());
-            v.getContext().startActivity(intent);
+        public boolean isExplanded() {
+            return explanded;
+        }
+
+        public void setExplanded(boolean explanded) {
+            this.explanded = explanded;
+        }
+
+        @Override
+
+        public void onClick(View v) {
+            if (!isExplanded()){
+                explandedViews(v.getId());
+                setExplanded(true);
+            }
+            else{
+                collapseViews(v.getId());
+                setExplanded(false);
+            }
         }
 
         @Override
@@ -113,6 +123,7 @@ public class AdapterExpandableBill extends RecycleAdapterExpandableBill<AdapterE
             menu.add(v.getId(), 1, ContextMenu.NONE, R.string.billInfo);
             menu.add(v.getId(), 2, ContextMenu.NONE, R.string.setOperation);
             menu.add(v.getId(), 3, ContextMenu.NONE, R.string.billdelete);
+            menu.add(v.getId(), 4, ContextMenu.NONE, "Collapse");
         }
     }
 }

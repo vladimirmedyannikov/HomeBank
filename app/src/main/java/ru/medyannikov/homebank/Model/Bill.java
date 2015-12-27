@@ -14,6 +14,16 @@ public class Bill {
     private Long date;
     private Integer sync;
     private int idServ;
+    private boolean explanded = true;
+
+    public boolean isExplanded() {
+        return explanded;
+    }
+
+    public void setExplanded(boolean explanded) {
+        this.explanded = explanded;
+    }
+
     private List<Operation> listOperation;
 
     public List<Operation> getListOperation() {

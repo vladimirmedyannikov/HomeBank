@@ -61,7 +61,9 @@ public class ActivityBillInfo extends AppCompatActivity {
 
     private void updateItems() {
         Bundle bundle = getIntent().getExtras();
-        bill = (Bill) SQLiteDataSource.explandedBills.get(bundle.getInt(ClassUtils.INTENT_BILL_INFO));
+        //bill = (Bill) bundle.get(ClassUtils.INTENT_BILL_INFO);
+        SQLiteDataSource sr = new SQLiteDataSource(this.getApplicationContext());
+        bill = (Bill) sr.getBill(bundle.getInt(ClassUtils.INTENT_BILL_INFO));
         //getSupportActionBar().setTitle(bill.getName());
         aboutBill.setText(bill.getAbout());
         valueBill.setText(bill.getValue().toString());

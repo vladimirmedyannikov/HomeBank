@@ -1,12 +1,12 @@
 package ru.medyannikov.homebank.Fragments;
 
 import android.content.Intent;
-import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,7 +23,6 @@ import ru.medyannikov.homebank.Activity.ActivityBillInfo;
 import ru.medyannikov.homebank.Adapter.AdapterExpandableBill;
 import ru.medyannikov.homebank.Adapter.RecycleAdapterBill;
 import ru.medyannikov.homebank.DataManager.SQLiteDataSource;
-import ru.medyannikov.homebank.DataManager.SQLiteHelperBill;
 import ru.medyannikov.homebank.DecorationRecycler.LineDivinerRecycler;
 import ru.medyannikov.homebank.Eventbus.BillChangeEvent;
 import ru.medyannikov.homebank.Eventbus.BusProvider;
@@ -37,18 +36,18 @@ import ru.medyannikov.homebank.Utils.ClassUtils;
 /**
  * Created by Vladimir on 26.09.2015.
  */
-public class BillsFragment extends Fragment {
+public class ExpandedBillsFragment extends Fragment {
     public static final int LAYOUT = R.layout.bills_fragment;
     private RecyclerView recyclerView;
-    List<Bill> billList;
+    List<Object> billList;
     private LinearLayoutManager layoutManager;
     private RecycleAdapterBill adapter;
     private FloatingActionButton fab;
     private SQLiteDataSource dataSource;
-    private static BillsFragment billsFragment;
-    public static BillsFragment getInstance(){
+    private static ExpandedBillsFragment billsFragment;
+    public static ExpandedBillsFragment getInstance(){
         Bundle bundle = new Bundle();
-        if (billsFragment == null) billsFragment = new BillsFragment();
+        if (billsFragment == null) billsFragment = new ExpandedBillsFragment();
         billsFragment.setArguments(bundle);
         return billsFragment;
     }
@@ -91,10 +90,8 @@ public class BillsFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         Drawable draw = getContext().getResources().getDrawable(R.drawable.line_diviner);
         recyclerView.addItemDecoration(new LineDivinerRecycler(draw));
-        //recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
         //billList = new ArrayList<Bill>();
-
-
 
         /*adapter = new RecycleAdapterBill(billList);
         recyclerView.setAdapter(adapter);
@@ -118,21 +115,9 @@ public class BillsFragment extends Fragment {
     }
 
     public void updateItems(){
-        /*billList = dataSource.getBills();
-        adapter = new RecycleAdapterBill(billList);
-        recyclerView.setAdapter(adapter);*/
-        /*if (adapter != null) {
-            recyclerView.setAdapter(adapter);
-            adapter.notifyDataSetChanged();
-        }
-        else{*/
-            billList = dataSource.getBills();
-            adapter = new RecycleAdapterBill(billList);
-            recyclerView.setAdapter(adapter);
-        /*AdapterExpandableBill adapterExpandableBill = new AdapterExpandableBill(dataSource.getExplandedBills());
-        recyclerView.setAdapter(adapterExpandableBill);*/
-
-       // }
+        billList = dataSource.getExplandedBills();
+        AdapterExpandableBill adapterExpandableBill = new AdapterExpandableBill(billList);
+        recyclerView.setAdapter(adapterExpandableBill);
     }
 
     @Override
@@ -163,7 +148,7 @@ public class BillsFragment extends Fragment {
                 break;
             case 3:
                 //Toast.makeText(this.getContext(), "Delete " + item.getGroupId(), Toast.LENGTH_SHORT).show();
-                Snackbar.make(this.getView(), "Delete " + item.getGroupId() + " " + billList.get(item.getGroupId()).getName(), Snackbar.LENGTH_SHORT).show();
+               // Snackbar.make(this.getView(), "Delete " + item.getGroupId() + " " + billList.get(item.getGroupId()).getName(), Snackbar.LENGTH_SHORT).show();
                 break;
  /*           case 4:
                 ((Bill)dataSource.getExplandedBills().get(item.getGroupId())).setE

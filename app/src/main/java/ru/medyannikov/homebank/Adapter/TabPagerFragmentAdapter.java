@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import ru.medyannikov.homebank.Fragments.BillsFragment;
 import ru.medyannikov.homebank.Fragments.ChartFragment;
+import ru.medyannikov.homebank.Fragments.ExpandedBillsFragment;
 import ru.medyannikov.homebank.Fragments.OperationFragment;
 import ru.medyannikov.homebank.R;
 
@@ -48,7 +49,7 @@ public class TabPagerFragmentAdapter extends FragmentPagerAdapter {
                 fragment = ChartFragment.getInstance();
                 break;
             case 3:
-                fragment = new Fragment();
+                fragment = ExpandedBillsFragment.getInstance();
                 break;
         }
         return fragment;
